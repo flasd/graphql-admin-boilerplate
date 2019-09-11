@@ -2,17 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-export default function Routes(props) {
-  const { routes, fallbackPath } = props;
+export default function Switcher(props) {
+  const { routes, composePath, fallbackPath } = props;
 
   return (
     <Switch>
       {routes.map((route) => (
         <Route
           key={route.path}
-          path={route.path}
+          path={`${composePath(route.path, props)}`}
           render={route.render}
-          exact={!!route.exact}
+          exact={!route.router}
         />
       ))}
       <Redirect to={fallbackPath} replace />
@@ -20,13 +20,14 @@ export default function Routes(props) {
   );
 }
 
-Routes.propTypes = {
+Switcher.propTypes = {
   routes: PropTypes.arrayOf(
     PropTypes.shape({
       path: PropTypes.string.isRequired,
       render: PropTypes.func.isRequired,
-      exact: PropTypes.bool,
+      router: PropTypes.bool,
     }),
   ).isRequired,
   fallbackPath: PropTypes.string.isRequired,
+  composePath: PropTypes.func.isRequired,
 };

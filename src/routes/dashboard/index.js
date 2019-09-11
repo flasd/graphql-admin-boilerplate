@@ -6,7 +6,6 @@ import privateRoute from '../../components/HOC/privateRoute';
 
 export default {
   path: '/dashboard',
-  exact: true,
   render: (routeProps) => compose(
     renderComponent,
     privateRoute(),

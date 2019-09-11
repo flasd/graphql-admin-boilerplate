@@ -1,8 +1,10 @@
 import { withProps } from 'recompose';
-import Routes from './Routes';
 import dashboard from './dashboard';
+import authn from './authn';
+import Switcher from '../components/Other/Switcher';
 
 export default withProps({
-  routes: [dashboard],
+  router: true,
+  routes: [dashboard, authn],
   fallbackPath: '',
-})(Routes);
+})(Switcher);

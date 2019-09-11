@@ -6,7 +6,7 @@ const CracoAntDesignPlugin = require('craco-antd');
 module.exports = {
   style: {
     modules: {
-      localIdentName: whenProd('[hash:base64:8]', '[name]_[local]_[hash:base64:8]'),
+      localIdentName: whenProd(() => '[hash:base64:8]', '[name]_[local]_[hash:base64:8]'),
     },
   },
   eslint: {

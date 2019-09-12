@@ -2,6 +2,7 @@
 const path = require('path');
 const { whenProd, ESLINT_MODES } = require('@craco/craco');
 const CracoAntDesignPlugin = require('craco-antd');
+const CracoLinariaPlugin = require('craco-linaria');
 
 module.exports = {
   style: {
@@ -11,6 +12,9 @@ module.exports = {
   },
   eslint: {
     mode: ESLINT_MODES.file,
+    loaderOptions: {
+      emitWarning: true,
+    },
   },
 
   plugins: [{
@@ -20,6 +24,11 @@ module.exports = {
         __dirname,
         'src/constans/antTheme.less',
       ),
+    },
+  }, {
+    plugin: CracoLinariaPlugin,
+    options: {
+      classNameSlug: '[hash]',
     },
   }],
 };

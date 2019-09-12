@@ -17,5 +17,14 @@
     "sourceType": "module"
   },
   "plugins": ["react", "sonarjs"],
-  "rules": {}
+  "rules": {
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "labelComponents": ["label"],
+        "controlComponents": ["Item"],
+        "depth": 1
+      }
+    ]
+  }
 }

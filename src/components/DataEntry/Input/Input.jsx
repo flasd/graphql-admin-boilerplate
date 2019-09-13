@@ -163,7 +163,7 @@ Input.propTypes = {
   label: PropTypes.string.isRequired,
   field: inputFieldPropTypes.isRequired,
   form: inputFormPropTypes.isRequired,
-  type: PropTypes.oneOf(Object.values(INPUT_TYPES)).isRequired,
+  type: PropTypes.oneOf(Object.values(INPUT_TYPES)),
   placeholder: PropTypes.string,
   required: PropTypes.bool,
   helpMessage: PropTypes.string,
@@ -174,6 +174,7 @@ Input.propTypes = {
 };
 
 Input.defaultProps = {
+  type: INPUT_TYPES.ANY,
   placeholder: '',
   required: false,
   helpMessage: '',

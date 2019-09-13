@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Icon, AutoComplete as AntAutoComplete } from 'antd';
 import * as styles from './AutoComplete.styles';
+import { inputFieldPropTypes, inputFormPropTypes } from '../../../constants/prop-types';
 
 const { Item } = Form;
 
@@ -92,19 +93,6 @@ export default function AutoComplete(props) {
     </div>
   );
 }
-
-const inputFieldPropTypes = PropTypes.shape({
-  name: PropTypes.string.isRequired,
-  value: PropTypes.any,
-  onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
-});
-
-const inputFormPropTypes = PropTypes.shape({
-  errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
-  isSubmitting: PropTypes.bool.isRequired,
-});
 
 AutoComplete.propTypes = {
   id: PropTypes.string.isRequired,

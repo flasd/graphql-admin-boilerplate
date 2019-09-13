@@ -5,6 +5,7 @@ import {
 } from 'antd';
 import MaskedInput from 'react-text-mask';
 import * as styles from './Input.styles';
+import { inputFieldPropTypes, inputFormPropTypes } from '../../../constants/prop-types';
 
 const { Item } = Form;
 
@@ -144,19 +145,6 @@ export default function Input(props) {
     </div>
   );
 }
-
-const inputFieldPropTypes = PropTypes.shape({
-  name: PropTypes.string.isRequired,
-  value: PropTypes.any,
-  onChange: PropTypes.func.isRequired,
-  onBlur: PropTypes.func.isRequired,
-});
-
-const inputFormPropTypes = PropTypes.shape({
-  errors: PropTypes.objectOf(PropTypes.string).isRequired,
-  touched: PropTypes.objectOf(PropTypes.bool).isRequired,
-  isSubmitting: PropTypes.bool.isRequired,
-});
 
 Input.propTypes = {
   id: PropTypes.string.isRequired,

@@ -1,15 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, AutoComplete } from 'antd';
+import { Form, AutoComplete, Icon } from 'antd';
 import * as styles from './Email.styles';
 
 const { Item } = Form;
-
-export const INPUT_TYPES = {
-  ANY: 'any',
-  PASSOWRD: 'password',
-  MASKED: 'masked',
-};
 
 function getValidationStatus(field, form) {
   const { errors, touched } = form;
@@ -33,7 +27,21 @@ function getHelpMessage(field, form) {
   return '';
 }
 
-export default function Input(props) {
+function getIcons(iconBefore, iconAfter) {
+  const icons = {};
+
+  if (iconBefore) {
+    icons.prefix = <Icon type={iconBefore} />;
+  }
+
+  if (iconAfter) {
+    icons.suffix = <Icon type={iconAfter} />;
+  }
+
+  return icons;
+}
+
+export default function Email(props) {
   const {
     id,
     label,
@@ -45,6 +53,8 @@ export default function Input(props) {
     disabled,
     onSearch,
     dataSource,
+    iconBefore,
+    iconAfter,
   } = props;
 
   const { isSubmitting } = form;
@@ -69,12 +79,13 @@ export default function Input(props) {
             value={field.value}
             onChange={field.onChange}
             onBlur={field.onBlur}
-            // eslint-disable-next-line react/jsx-props-no-spreading
             onSearch={onSearch}
             placeholder={placeholder}
             disabled={disabled || isSubmitting}
             dataSource={dataSource}
             className={styles.container}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...getIcons(iconBefore, iconAfter)}
           />
         </Item>
       </label>
@@ -95,7 +106,7 @@ const inputFormPropTypes = PropTypes.shape({
   isSubmitting: PropTypes.bool.isRequired,
 });
 
-Input.propTypes = {
+Email.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   field: inputFieldPropTypes.isRequired,
@@ -106,11 +117,15 @@ Input.propTypes = {
   disabled: PropTypes.bool,
   onSearch: PropTypes.func.isRequired,
   dataSource: PropTypes.arrayOf(PropTypes.string).isRequired,
+  iconBefore: PropTypes.string,
+  iconAfter: PropTypes.string,
 };
 
-Input.defaultProps = {
+Email.defaultProps = {
   placeholder: '',
   required: false,
   helpMessage: '',
   disabled: false,
+  iconBefore: '',
+  iconAfter: '',
 };

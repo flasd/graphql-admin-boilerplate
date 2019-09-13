@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input as AntInput } from 'antd';
+import {
+  Form, Icon, Input as AntInput, Tooltip,
+} from 'antd';
 import MaskedInput from 'react-text-mask';
 import * as styles from './Input.styles';
 
@@ -60,6 +62,34 @@ function getMask(inputType, props) {
   return {};
 }
 
+function getIcons(iconBefore, iconAfter) {
+  const icons = {};
+
+  if (iconBefore) {
+    icons.prefix = <Icon type={iconBefore} />;
+  }
+
+  if (iconAfter) {
+    icons.suffix = <Icon type={iconAfter} />;
+  }
+
+  return icons;
+}
+
+function getExtraInformation(extraInformation) {
+  if (extraInformation) {
+    return {
+      suffix: (
+        <Tooltip title={extraInformation}>
+          <Icon type="info-circle" />
+        </Tooltip>
+      ),
+    };
+  }
+
+  return {};
+}
+
 export default function Input(props) {
   const {
     id,
@@ -71,6 +101,9 @@ export default function Input(props) {
     type: inputType,
     placeholder,
     disabled,
+    iconBefore,
+    iconAfter,
+    extraInformation,
   } = props;
 
   const { isSubmitting } = form;
@@ -87,7 +120,7 @@ export default function Input(props) {
 
         <Item
           validateStatus={getValidationStatus(field, form)}
-          hasFeedback
+          hasFeedback={!extraInformation}
           help={getHelpMessage(field, form)}
           extra={helpMessage}
         >
@@ -97,10 +130,14 @@ export default function Input(props) {
             value={field.value}
             onChange={field.onChange}
             onBlur={field.onBlur}
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...getMask(inputType, props)}
             placeholder={placeholder}
             disabled={disabled || isSubmitting}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...getMask(inputType, props)}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...getIcons(iconBefore, iconAfter)}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...getExtraInformation(extraInformation)}
           />
         </Item>
       </label>
@@ -131,6 +168,9 @@ Input.propTypes = {
   required: PropTypes.bool,
   helpMessage: PropTypes.string,
   disabled: PropTypes.bool,
+  iconBefore: PropTypes.string,
+  iconAfter: PropTypes.string,
+  extraInformation: PropTypes.string,
 };
 
 Input.defaultProps = {
@@ -138,4 +178,7 @@ Input.defaultProps = {
   required: false,
   helpMessage: '',
   disabled: false,
+  iconBefore: '',
+  iconAfter: '',
+  extraInformation: '',
 };

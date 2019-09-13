@@ -1,15 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, AutoComplete as AntAutoComplete } from 'antd';
+import { Form, Icon, AutoComplete as AntAutoComplete } from 'antd';
 import * as styles from './AutoComplete.styles';
 
 const { Item } = Form;
-
-export const INPUT_TYPES = {
-  ANY: 'any',
-  PASSOWRD: 'password',
-  MASKED: 'masked',
-};
 
 function getValidationStatus(field, form) {
   const { errors, touched } = form;
@@ -33,6 +27,20 @@ function getHelpMessage(field, form) {
   return '';
 }
 
+function getIcons(iconBefore, iconAfter) {
+  const icons = {};
+
+  if (iconBefore) {
+    icons.prefix = <Icon type={iconBefore} />;
+  }
+
+  if (iconAfter) {
+    icons.suffix = <Icon type={iconAfter} />;
+  }
+
+  return icons;
+}
+
 export default function AutoComplete(props) {
   const {
     id,
@@ -45,6 +53,8 @@ export default function AutoComplete(props) {
     disabled,
     onSearch,
     options,
+    iconBefore,
+    iconAfter,
   } = props;
 
   const { isSubmitting } = form;
@@ -69,12 +79,13 @@ export default function AutoComplete(props) {
             value={field.value}
             onChange={field.onChange}
             onBlur={field.onBlur}
-            // eslint-disable-next-line react/jsx-props-no-spreading
             onSearch={onSearch}
             placeholder={placeholder}
             disabled={disabled || isSubmitting}
             dataSource={options}
             className={styles.container}
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...getIcons(iconBefore, iconAfter)}
           />
         </Item>
       </label>
@@ -106,6 +117,8 @@ AutoComplete.propTypes = {
   disabled: PropTypes.bool,
   onSearch: PropTypes.func.isRequired,
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
+  iconBefore: PropTypes.string,
+  iconAfter: PropTypes.string,
 };
 
 AutoComplete.defaultProps = {
@@ -113,4 +126,6 @@ AutoComplete.defaultProps = {
   required: false,
   helpMessage: '',
   disabled: false,
+  iconBefore: '',
+  iconAfter: '',
 };

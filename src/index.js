@@ -26,7 +26,10 @@ ReactDOM.render(
 
 if (process.env.NODE_ENV === 'development') {
   // Ant uses those functions internally and the warnings are annoying
-  filterConsole('Warning: componentWillReceiveProps has been renamed');
+  filterConsole([
+    'Warning: componentWillMount',
+    'Warning: componentWillReceiveProps',
+  ]);
 }
 
 // If you want your app to work offline and load faster, you can change

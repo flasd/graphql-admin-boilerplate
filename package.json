@@ -28,6 +28,7 @@
     "lodash.get": "^4.4.2",
     "lodash.identity": "^3.0.0",
     "lodash.once": "^4.1.1",
+    "moment": "^2.24.0",
     "nanoreset": "^3.0.2",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",

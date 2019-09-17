@@ -1,7 +1,7 @@
 import { withProps } from 'recompose';
 import CheckboxGroup from './CheckboxGroup';
 
-export default withProps((props) => {
+export function privateInjectProps(props) {
   const { field, form: { setFieldValue } } = props;
 
   return ({
@@ -11,4 +11,6 @@ export default withProps((props) => {
       onChange: (value) => setFieldValue(field.name, value),
     },
   });
-})(CheckboxGroup);
+}
+
+export default withProps(privateInjectProps)(CheckboxGroup);

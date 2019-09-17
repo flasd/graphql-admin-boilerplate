@@ -14,7 +14,7 @@ export const SEARCH_MODES = {
   PASSTHROUGH: 'ps',
 };
 
-function filter(dataSource, value, searchMode, filterFn) {
+export function privateFilter(dataSource, value, searchMode, filterFn) {
   if (!value || value.length === 0) {
     return dataSource;
   }
@@ -53,29 +53,37 @@ function filter(dataSource, value, searchMode, filterFn) {
   }
 }
 
-function onSearch(state, props) {
+export function privateOnSearch(state, props) {
   const { searchMode = SEARCH_MODES.PASSTHROUGH, dataSource } = props;
 
   return (value) => ({
-    options: filter(dataSource, value, searchMode),
+    options: privateFilter(dataSource, value, searchMode),
   });
 }
 
-export default compose(
-  withStateHandlers((props) => ({ options: props.dataSource }), {
-    onSearch,
-  }),
-  withProps((props) => {
-    const { form, field } = props;
-    const { name } = field;
-    const { setFieldValue } = form;
+export function privateInjectProps(props) {
+  const { form, field } = props;
+  const { name } = field;
+  const { setFieldValue } = form;
 
-    return {
-      id: `${field.name}-autocomplete-input`.toLowerCase(),
-      field: {
-        ...field,
-        onChange: (value) => setFieldValue(name, value),
-      },
-    };
-  }),
+  return {
+    id: `${field.name}-autocomplete-input`.toLowerCase(),
+    field: {
+      ...field,
+      onChange: (value) => setFieldValue(name, value),
+    },
+  };
+}
+
+export function privateCreateInitialState(props) {
+  return { options: props.dataSource };
+}
+
+export const privateStateHandlers = {
+  onSearch: privateOnSearch,
+};
+
+export default compose(
+  withStateHandlers(privateCreateInitialState, privateStateHandlers),
+  withProps(privateInjectProps),
 )(AutoComplete);

@@ -7,27 +7,35 @@ const emailProviders = [
   'outlook.com',
 ];
 
-function onSearch() {
+export function privateOnSearch() {
   return (value) => ({
     dataSource: value.indexOf('@') === -1 ? emailProviders.map((provider) => `${value}@${provider}`) : [],
   });
 }
 
-export default compose(
-  withStateHandlers({ dataSource: [] }, {
-    onSearch,
-  }),
-  withProps((props) => {
-    const { form, field } = props;
-    const { name } = field;
-    const { setFieldValue } = form;
+export function privateInjectProps(props) {
+  const { form, field } = props;
+  const { name } = field;
+  const { setFieldValue } = form;
 
-    return {
-      id: `${field.name}-email`.toLowerCase(),
-      field: {
-        ...field,
-        onChange: (value) => setFieldValue(name, value),
-      },
-    };
-  }),
+  return {
+    id: `${field.name}-email`.toLowerCase(),
+    field: {
+      ...field,
+      onChange: (value) => setFieldValue(name, value),
+    },
+  };
+}
+
+export const privateInitialState = {
+  dataSource: [],
+};
+
+export const privateStateHandlers = {
+  onSearch: privateOnSearch,
+};
+
+export default compose(
+  withStateHandlers(privateInitialState, privateStateHandlers),
+  withProps(privateInjectProps),
 )(Email);

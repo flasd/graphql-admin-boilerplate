@@ -1,10 +1,12 @@
 import { withProps } from 'recompose';
 import Textarea from './Textarea';
 
-export default withProps((props) => {
+export function privateInjectProps(props) {
   const { field } = props;
 
   return {
     id: `${field.name}-textarea-input`.toLowerCase(),
   };
-})(Textarea);
+}
+
+export default withProps(privateInjectProps)(Textarea);

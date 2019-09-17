@@ -1,10 +1,12 @@
 import { withProps } from 'recompose';
 import Input, { INPUT_TYPES } from './Input';
 
-export default withProps((props) => {
+export function privateInjectProps(props) {
   const { field, type: inputType } = props;
 
   return {
     id: `${field.name}-${inputType || INPUT_TYPES.ANY}-input`.toLowerCase(),
   };
-})(Input);
+}
+
+export default withProps(privateInjectProps)(Input);

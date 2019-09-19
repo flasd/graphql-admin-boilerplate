@@ -12,3 +12,12 @@ export const inputFormPropTypes = PropTypes.shape({
   touched: PropTypes.objectOf(PropTypes.bool).isRequired,
   isSubmitting: PropTypes.bool.isRequired,
 });
+
+export const optionPropTypes = PropTypes.arrayOf(
+  PropTypes.shape({
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+      .isRequired,
+    label: PropTypes.string.isRequired,
+    disabled: PropTypes.bool,
+  }),
+);

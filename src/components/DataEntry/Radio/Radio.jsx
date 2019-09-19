@@ -5,6 +5,7 @@ import * as styles from './Radio.styles';
 import {
   inputFieldPropTypes,
   inputFormPropTypes,
+  optionPropTypes,
 } from '../../../constants/prop-types';
 
 const { Item } = Form;
@@ -70,11 +71,11 @@ export default function Input(props) {
             onBlur={field.onBlur}
             disabled={disabled || isSubmitting}
           >
-            {options.map((option) => (
+            {options.map((option, index) => (
               <AntRadio
                 key={option.value}
                 value={option.value}
-                // disabled={options.disabled}
+                id={`${id}-${index}`}
                 className={vertical ? styles.vertical : ''}
               >
                 {option.label}
@@ -96,14 +97,7 @@ Input.propTypes = {
   helpMessage: PropTypes.string,
   disabled: PropTypes.bool,
   extraInformation: PropTypes.string,
-  options: PropTypes.arrayOf(
-    PropTypes.shape({
-      value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
-        .isRequired,
-      label: PropTypes.string.isRequired,
-      disabled: PropTypes.bool,
-    }),
-  ).isRequired,
+  options: optionPropTypes.isRequired,
   vertical: PropTypes.bool,
 };
 

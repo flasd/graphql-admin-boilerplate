@@ -4,7 +4,7 @@ import Switcher from './Switcher';
 
 
 export function composePath(path, props) {
-  return `${get(props, ['match', 'path'], '')}/${path}`.replace(/\/\//g, '/');
+  return `${get(props, ['match', 'path'], '')}/${path}`.replace(/\/{2,}/g, '/');
 }
 
 export default withProps({

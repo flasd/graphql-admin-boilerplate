@@ -15,7 +15,7 @@ export default function Switcher(props) {
           exact={!route.router}
         />
       ))}
-      <Redirect to={fallbackPath} replace />
+      <Redirect to={composePath(fallbackPath)} replace />
     </Switch>
   );
 }

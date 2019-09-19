@@ -80,7 +80,11 @@ export default function Select(props) {
             onSearch={handleSearch}
           >
             {options.map((option) => (
-              <Option key={option.value} value={option.value}>
+              <Option
+                key={option.value}
+                value={option.value}
+                disabled={option.disabled}
+              >
                 {option.label}
               </Option>
             ))}

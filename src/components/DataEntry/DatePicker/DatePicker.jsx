@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import 'moment/locale/pt-br';
 import defaultLocale from 'antd/es/date-picker/locale/pt_BR';
 import { Form, DatePicker as AntDatePicker } from 'antd';
+import classnames from 'classnames';
 import {
   inputFieldPropTypes,
   inputFormPropTypes,
@@ -45,6 +46,10 @@ export default function DatePicker(props) {
     helpMessage,
     disabled,
     extraInformation,
+    allowClear,
+    autoFocus,
+    style,
+    className,
   } = props;
 
   const { isSubmitting } = form;
@@ -72,7 +77,10 @@ export default function DatePicker(props) {
             disabled={disabled || isSubmitting}
             format={format}
             locale={locale}
-            className={styles.growInput}
+            className={classnames(styles.growInput, className)}
+            allowClear={allowClear}
+            autoFocus={autoFocus}
+            style={style}
           />
         </Item>
       </label>
@@ -91,6 +99,13 @@ DatePicker.propTypes = {
   extraInformation: PropTypes.string,
   format: PropTypes.string.isRequired,
   locale: PropTypes.objectOf(PropTypes.any),
+  allowClear: PropTypes.bool,
+  autoFocus: PropTypes.bool,
+  style: PropTypes.objectOf(PropTypes.any),
+  className: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
 };
 
 DatePicker.defaultProps = {
@@ -99,4 +114,8 @@ DatePicker.defaultProps = {
   disabled: false,
   extraInformation: '',
   locale: defaultLocale,
+  allowClear: false,
+  autoFocus: false,
+  style: {},
+  className: '',
 };

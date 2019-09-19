@@ -47,6 +47,8 @@ export default function Select(props) {
     loading,
     iconAfter,
     handleSearch,
+    allowClear,
+    autoFocus,
   } = props;
 
   const { isSubmitting } = form;
@@ -74,10 +76,12 @@ export default function Select(props) {
             mode={multiple ? 'multiple' : 'default'}
             filterOption
             showSearch
-            className={styles.block}
             loading={loading}
             suffixIcon={iconAfter && <Icon type={iconAfter} />}
             onSearch={handleSearch}
+            className={styles.block}
+            allowClear={allowClear}
+            autoFocus={autoFocus}
           >
             {options.map((option) => (
               <Option
@@ -108,6 +112,8 @@ Select.propTypes = {
   loading: PropTypes.bool,
   iconAfter: PropTypes.string,
   handleSearch: PropTypes.func,
+  allowClear: PropTypes.bool,
+  autoFocus: PropTypes.bool,
 };
 
 Select.defaultProps = {
@@ -118,4 +124,6 @@ Select.defaultProps = {
   iconAfter: '',
   handleSearch: null,
   loading: false,
+  allowClear: false,
+  autoFocus: false,
 };

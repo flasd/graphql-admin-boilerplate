@@ -56,6 +56,7 @@ export default function Textarea(props) {
     autosize,
     minRows,
     maxRows,
+    allowClear,
   } = props;
 
   const { isSubmitting } = form;
@@ -82,6 +83,7 @@ export default function Textarea(props) {
             onBlur={field.onBlur}
             placeholder={placeholder}
             disabled={disabled || isSubmitting}
+            allowClear={allowClear}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...getAutosize(autosize, minRows, maxRows)}
           />
@@ -116,6 +118,7 @@ Textarea.propTypes = {
   autosize: PropTypes.bool,
   minRows: PropTypes.number,
   maxRows: PropTypes.number,
+  allowClear: PropTypes.bool,
 };
 
 Textarea.defaultProps = {
@@ -126,4 +129,5 @@ Textarea.defaultProps = {
   autosize: false,
   minRows: 3,
   maxRows: 7,
+  allowClear: false,
 };

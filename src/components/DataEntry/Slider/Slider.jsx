@@ -69,6 +69,7 @@ export default function Slider(props) {
     max,
     iconBefore,
     iconAfter,
+    autoFocus,
   } = props;
 
   const { isSubmitting } = form;
@@ -101,6 +102,7 @@ export default function Slider(props) {
             min={min}
             max={max}
             step={step}
+            autoFocus={autoFocus}
           />
           {iconAfter && (
             <Icon type={iconAfter} style={getIconStyle(false, props)} />
@@ -125,6 +127,7 @@ Slider.propTypes = {
   max: PropTypes.number,
   iconBefore: PropTypes.string,
   iconAfter: PropTypes.string,
+  autoFocus: PropTypes.bool,
 };
 
 Slider.defaultProps = {
@@ -137,4 +140,5 @@ Slider.defaultProps = {
   max: 100,
   iconBefore: '',
   iconAfter: '',
+  autoFocus: false,
 };

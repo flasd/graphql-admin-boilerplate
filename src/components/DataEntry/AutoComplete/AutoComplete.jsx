@@ -56,6 +56,8 @@ export default function AutoComplete(props) {
     options,
     iconBefore,
     iconAfter,
+    allowClear,
+    autoFocus,
   } = props;
 
   const { isSubmitting } = form;
@@ -85,6 +87,8 @@ export default function AutoComplete(props) {
             disabled={disabled || isSubmitting}
             dataSource={options}
             className={styles.container}
+            allowClear={allowClear}
+            autoFocus={autoFocus}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...getIcons(iconBefore, iconAfter)}
           />
@@ -107,6 +111,8 @@ AutoComplete.propTypes = {
   options: PropTypes.arrayOf(PropTypes.string).isRequired,
   iconBefore: PropTypes.string,
   iconAfter: PropTypes.string,
+  allowClear: PropTypes.bool,
+  autoFocus: PropTypes.bool,
 };
 
 AutoComplete.defaultProps = {
@@ -116,4 +122,6 @@ AutoComplete.defaultProps = {
   disabled: false,
   iconBefore: '',
   iconAfter: '',
+  allowClear: false,
+  autoFocus: false,
 };

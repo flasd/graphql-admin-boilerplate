@@ -40,6 +40,7 @@ export default function Switch(props) {
     form,
     helpMessage,
     disabled,
+    autoFocus,
   } = props;
 
   const { isSubmitting } = form;
@@ -65,6 +66,7 @@ export default function Switch(props) {
               onChange={field.onChange}
               onBlur={field.onBlur}
               disabled={disabled || isSubmitting}
+              autoFocus={autoFocus}
             />
           </div>
         </Item>
@@ -81,10 +83,12 @@ Switch.propTypes = {
   required: PropTypes.bool,
   helpMessage: PropTypes.string,
   disabled: PropTypes.bool,
+  autoFocus: PropTypes.bool,
 };
 
 Switch.defaultProps = {
   required: false,
   helpMessage: '',
   disabled: false,
+  autoFocus: false,
 };

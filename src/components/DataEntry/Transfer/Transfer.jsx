@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Transfer as AntTransfer } from 'antd';
+import classnames from 'classnames';
 import * as styles from './Transfer.styles';
 import {
   inputFieldPropTypes,
@@ -48,6 +49,7 @@ export default function Input(props) {
     titles,
     width,
     height,
+    className,
   } = props;
 
   const { isSubmitting } = form;
@@ -75,6 +77,7 @@ export default function Input(props) {
             dataSource={dataSource}
             render={renderItem}
             listStyle={{ width, height }}
+            className={classnames(className)}
           />
         </Item>
       </label>
@@ -101,6 +104,10 @@ Input.propTypes = {
   titles: PropTypes.arrayOf(PropTypes.string).isRequired,
   width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   height: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  className: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
 };
 
 Input.defaultProps = {
@@ -109,4 +116,5 @@ Input.defaultProps = {
   disabled: false,
   width: null,
   height: null,
+  className: '',
 };

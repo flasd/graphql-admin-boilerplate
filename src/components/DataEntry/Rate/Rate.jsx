@@ -41,6 +41,10 @@ export default function Rate(props) {
     helpMessage,
     disabled,
     allowHalf,
+    allowClear,
+    autoFocus,
+    style,
+    className,
   } = props;
 
   const { isSubmitting } = form;
@@ -67,6 +71,10 @@ export default function Rate(props) {
             disabled={disabled || isSubmitting}
             allowHalf={allowHalf}
             defaultValue={3}
+            className={className}
+            allowClear={allowClear}
+            autoFocus={autoFocus}
+            style={style}
           />
         </Item>
       </label>
@@ -83,6 +91,13 @@ Rate.propTypes = {
   helpMessage: PropTypes.string,
   disabled: PropTypes.bool,
   allowHalf: PropTypes.bool,
+  allowClear: PropTypes.bool,
+  autoFocus: PropTypes.bool,
+  style: PropTypes.objectOf(PropTypes.any),
+  className: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string),
+  ]),
 };
 
 Rate.defaultProps = {
@@ -90,4 +105,8 @@ Rate.defaultProps = {
   helpMessage: '',
   disabled: false,
   allowHalf: false,
+  allowClear: false,
+  autoFocus: false,
+  style: {},
+  className: '',
 };

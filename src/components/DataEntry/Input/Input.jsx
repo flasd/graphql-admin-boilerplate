@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {
   Form, Icon, Input as AntInput, Tooltip,
 } from 'antd';
+import noop from 'lodash.noop';
 import MaskedInput from 'react-text-mask';
 import * as styles from './Input.styles';
 import { inputFieldPropTypes, inputFormPropTypes } from '../../../constants/prop-types';
@@ -105,6 +106,8 @@ export default function Input(props) {
     iconBefore,
     iconAfter,
     extraInformation,
+    allowClear,
+    handleEnter,
   } = props;
 
   const { isSubmitting } = form;
@@ -133,6 +136,8 @@ export default function Input(props) {
             onBlur={field.onBlur}
             placeholder={placeholder}
             disabled={disabled || isSubmitting}
+            allowClear={allowClear}
+            onPressEnter={handleEnter}
             // eslint-disable-next-line react/jsx-props-no-spreading
             {...getMask(inputType, props)}
             // eslint-disable-next-line react/jsx-props-no-spreading
@@ -159,6 +164,8 @@ Input.propTypes = {
   iconBefore: PropTypes.string,
   iconAfter: PropTypes.string,
   extraInformation: PropTypes.string,
+  allowClear: PropTypes.bool,
+  handleEnter: PropTypes.func,
 };
 
 Input.defaultProps = {
@@ -170,4 +177,6 @@ Input.defaultProps = {
   iconBefore: '',
   iconAfter: '',
   extraInformation: '',
+  allowClear: false,
+  handleEnter: noop,
 };

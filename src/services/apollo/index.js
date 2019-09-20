@@ -14,7 +14,7 @@ const GRAPHQL_ENDPOINT = process.env.REACT_APP_GRAPHQL_ENDPOINT;
 
 export function handleErrors({ graphQLErrors, networkError }) {
   // eslint-disable-next-line no-undef
-  if (__DEV__) {
+  if (process.env.NODE_ENV) {
     /* eslint-disable no-console */
     if (graphQLErrors) {
       graphQLErrors.map(({ message, locations, path }) => console.log(
@@ -28,6 +28,8 @@ export function handleErrors({ graphQLErrors, networkError }) {
   }
 }
 
+export const retryWhitelist = [];
+
 export async function getClient(cb) {
   const cache = new InMemoryCache();
 
@@ -36,7 +38,12 @@ export async function getClient(cb) {
     storage: window.localStorage,
   });
 
-  const retry = new RetryLink({ attempts: { max: Infinity } });
+  const retry = new RetryLink({
+    attempts: {
+      max: Infinity,
+      retryIf: (e, { operationName }) => retryWhitelist.includes(operationName),
+    },
+  });
   const offlineLink = new QueueLink();
 
   const wsLink = new WebSocketLink({
@@ -73,7 +80,6 @@ export async function getClient(cb) {
     fetchOptions: {
       credentials: 'include',
     },
-
   });
 
   const httpLink = ApolloLink.from([errorHandler, offlineLink, retry, managerLink, http]);

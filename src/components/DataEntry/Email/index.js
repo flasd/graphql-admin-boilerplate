@@ -16,13 +16,18 @@ export function privateOnSearch() {
 export function privateInjectProps(props) {
   const { form, field } = props;
   const { name } = field;
-  const { setFieldValue } = form;
+  const { setFieldValue, setFieldTouched } = form;
 
   return {
     id: `${field.name}-email`.toLowerCase(),
     field: {
       ...field,
       onChange: (value) => setFieldValue(name, value),
+      onBlur: () => {
+        if (!form.touched[name]) {
+          setFieldTouched(name, true);
+        }
+      },
     },
   };
 }

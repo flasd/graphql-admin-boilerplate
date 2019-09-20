@@ -124,7 +124,7 @@ export default function Input(props) {
 
         <Item
           validateStatus={getValidationStatus(field, form)}
-          hasFeedback={!extraInformation}
+          hasFeedback={!(inputType === INPUT_TYPES.PASSOWRD || !extraInformation)}
           help={getHelpMessage(field, form)}
           extra={helpMessage}
         >

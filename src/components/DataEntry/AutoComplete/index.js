@@ -64,13 +64,18 @@ export function privateOnSearch(state, props) {
 export function privateInjectProps(props) {
   const { form, field } = props;
   const { name } = field;
-  const { setFieldValue } = form;
+  const { setFieldValue, setFieldTouched } = form;
 
   return {
     id: `${field.name}-autocomplete-input`.toLowerCase(),
     field: {
       ...field,
       onChange: (value) => setFieldValue(name, value),
+      onBlur: () => {
+        if (!form.touched[name]) {
+          setFieldTouched(name, true);
+        }
+      },
     },
   };
 }

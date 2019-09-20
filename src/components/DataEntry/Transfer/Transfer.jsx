@@ -36,7 +36,7 @@ export function renderItem(item) {
   return item.title;
 }
 
-export default function Input(props) {
+export default function Transfer(props) {
   const {
     id,
     label,
@@ -92,7 +92,7 @@ const transferItemPropTypes = PropTypes.shape({
   disabled: PropTypes.bool,
 });
 
-Input.propTypes = {
+Transfer.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   field: inputFieldPropTypes.isRequired,
@@ -110,7 +110,7 @@ Input.propTypes = {
   ]),
 };
 
-Input.defaultProps = {
+Transfer.defaultProps = {
   required: false,
   helpMessage: '',
   disabled: false,

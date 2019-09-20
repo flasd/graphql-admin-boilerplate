@@ -34,7 +34,7 @@ function getHelpMessage(field, form) {
   return '';
 }
 
-export default function Input(props) {
+export default function Upload(props) {
   const {
     id,
     label,
@@ -84,7 +84,7 @@ export default function Input(props) {
   );
 }
 
-Input.propTypes = {
+Upload.propTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   field: inputFieldPropTypes.isRequired,
@@ -103,7 +103,7 @@ Input.propTypes = {
   ]),
 };
 
-Input.defaultProps = {
+Upload.defaultProps = {
   helpMessage: '',
   disabled: false,
   iconBefore: 'upload',

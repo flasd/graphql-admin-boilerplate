@@ -6,10 +6,12 @@ import recoverPassword from './recoverPassword';
 import resetPassword from './resetPassword';
 import confirmEmail from './confirmEmail';
 import createAccount from './createAccount';
+import A from './A';
+import wrapIn from '../../components/HOC/wrapIn';
 
 export default {
   router: true,
-  path: '/authn',
+  path: '/a',
   render: (routeProps) => compose(
     renderComponent,
     withProps({
@@ -23,5 +25,6 @@ export default {
       ],
       fallbackPath: composePath(login.path, routeProps),
     }),
+    wrapIn(A),
   )(Switcher),
 };

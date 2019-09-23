@@ -15,3 +15,7 @@ export const gray = '#aaaaaa';
 export const white = '#ffffff';
 export const black = '#111111';
 export const silver = '#dddddd';
+
+export const facebookBlue = '#3b5998';
+export const googleBlue = '#4285f4';
+export const googleRed = '#ea4335';

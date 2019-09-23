@@ -10,10 +10,10 @@ import {
 const { Item } = Form;
 
 export function privateGetValidationStatus(field, form) {
-  const { errors, touched } = form;
+  const { errors, touched, submitCount } = form;
   const { name } = field;
 
-  if (touched[name]) {
+  if (touched[name] || submitCount > 0) {
     return errors[name] ? 'error' : 'success';
   }
 
@@ -21,10 +21,10 @@ export function privateGetValidationStatus(field, form) {
 }
 
 export function privateGetHelpMessage(field, form) {
-  const { errors, touched } = form;
+  const { errors, touched, submitCount } = form;
   const { name } = field;
 
-  if (touched[name]) {
+  if (touched[name] || submitCount > 0) {
     return errors[name];
   }
 

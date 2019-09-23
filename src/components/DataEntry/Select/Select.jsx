@@ -12,10 +12,10 @@ const { Item } = Form;
 const { Option } = AntSelect;
 
 function getValidationStatus(field, form) {
-  const { errors, touched } = form;
+  const { errors, touched, submitCount } = form;
   const { name } = field;
 
-  if (touched[name]) {
+  if (touched[name] || submitCount > 0) {
     return errors[name] ? 'error' : 'success';
   }
 
@@ -23,10 +23,10 @@ function getValidationStatus(field, form) {
 }
 
 function getHelpMessage(field, form) {
-  const { errors, touched } = form;
+  const { errors, touched, submitCount } = form;
   const { name } = field;
 
-  if (touched[name]) {
+  if (touched[name] || submitCount > 0) {
     return errors[name];
   }
 

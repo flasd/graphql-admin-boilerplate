@@ -12,6 +12,7 @@ import 'nanoreset';
 import '@flasd/focus-fix';
 import '@flasd/focus-fix/styles.css';
 import 'view-units';
+import './constants/overrides.css';
 
 setLocalStorageKey('b7181ffb6932f718c818b7f8a55d66a0227ac293');
 

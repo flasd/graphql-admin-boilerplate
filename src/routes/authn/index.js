@@ -7,11 +7,12 @@ import resetPassword from './resetPassword';
 import confirmEmail from './confirmEmail';
 import createAccount from './createAccount';
 import A from './A';
+import path from './A.path';
 import wrapIn from '../../components/HOC/wrapIn';
 
 export default {
   router: true,
-  path: '/a',
+  path,
   render: (routeProps) => compose(
     renderComponent,
     withProps({

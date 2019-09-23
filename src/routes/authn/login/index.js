@@ -1,4 +1,9 @@
-import { compose, withProps } from 'recompose';
+import {
+  compose,
+  withProps,
+  withHandlers,
+  withStateHandlers,
+} from 'recompose';
 import { withFormik } from 'formik';
 import * as yup from 'yup';
 import gql from 'graphql-tag';
@@ -9,7 +14,129 @@ import redirectIfAuthenticated from '../../../components/HOC/redirectIfAuthentic
 import renderComponent from '../../../components/HOC/renderComponent';
 import { composePath } from '../../../components/Other/Switcher';
 import Login from './Login';
+import authPath from '../A.path';
+import dashboard from '../../dashboard';
 import createAccount from '../createAccount';
+
+const firebase = import('../../../services/firebase');
+
+// General
+
+export function privateInjectProps($history) {
+  return {
+    navigateToSignUp: () => $history.push(composePath(createAccount.path, authPath)),
+    history: $history,
+  };
+}
+
+// Social Auth
+
+export const privateInitialState = {
+  emailLoading: false,
+  facebookLoading: false,
+  googleLoading: false,
+};
+
+export function setLoading(authProvider) {
+  switch (authProvider) {
+    case 'facebook':
+      return {
+        ...privateInitialState,
+        facebookLoading: true,
+      };
+
+    case 'google':
+      return {
+        ...privateInitialState,
+        googleLoading: true,
+      };
+
+    case 'email':
+      return {
+        ...privateInitialState,
+        emailLoading: true,
+      };
+
+    case 'unset':
+    default:
+      return {
+        ...privateInitialState,
+      };
+  }
+}
+
+export const privateStateHandlers = {
+  setLoading: () => setLoading,
+};
+
+export const createSocialAccountMutation = gql`
+  mutation createSocialAccount($firebaseIdToken: String!) {
+    createSocialAccount(firebaseIdToken: $firebaseIdToken)
+  }
+`;
+
+export const socialLoginMutation = gql`
+  mutation socialLogin($firebaseIdToken: String!) {
+    socialLogin(firebaseIdToken: $firebaseIdToken)
+  }
+`;
+
+export async function privateGetProvider(authProvider) {
+  const {
+    default: $firebase,
+  } = await firebase;
+
+  if (authProvider === 'facebook') {
+    return new $firebase.auth.FacebookAuthProvider();
+  }
+
+  return new $firebase.auth.GoogleAuthProvider();
+}
+
+export function privateSignInWithProvider(props) {
+  const {
+    createSocialAccount,
+    socialLogin,
+    setLoading: $setLoading,
+    history: $history,
+  } = props;
+
+  return async (authProvider) => {
+    const {
+      auth,
+    } = await firebase;
+
+    const provider = await privateGetProvider(authProvider);
+    auth.languageCode = 'pt';
+
+    $setLoading(authProvider);
+
+    try {
+      await auth.signInWithPopup(provider);
+
+      const idToken = await auth.currentUser.getIdToken();
+
+      await createSocialAccount({ variables: { firebaseIdToken: idToken } });
+      await socialLogin({ variables: { firebaseIdToken: idToken } });
+      $history.push(dashboard.path);
+    } catch (error) {
+      message.error('CHANGE THIS');
+      $setLoading('unset');
+    }
+  };
+}
+
+export const privateSocialAuthComposition = compose(
+  withStateHandlers(privateInitialState, privateStateHandlers),
+  graphql(socialLoginMutation, { name: 'socialLogin' }),
+  graphql(createSocialAccountMutation, { name: 'createSocialAccount' }),
+  withHandlers({
+    socialLogin: privateSignInWithProvider,
+  }),
+);
+
+
+// Email Auth
 
 export const loginMutation = gql`
   mutation login($email: EmailAddress!, $password: String!) {
@@ -22,37 +149,41 @@ export const LOGIN_SCHEMA = yup.object().shape({
   password: yup.string().required('Campo obrigarório'),
 });
 
-export function privateInjectProps($history) {
-  return {
-    navigateToSignUp: () => $history.push(composePath(createAccount.path, '/a')),
-    history: $history,
-  };
-}
-
 export async function privateHandleSubmit(values, { props, setSubmitting }) {
-  const { login } = props;
+  const { login, setLoading: $setLoading } = props;
+
+  $setLoading('email');
 
   try {
     await login({ variables: { ...values } });
-    props.history.push('/dashboard');
+    props.history.push(dashboard.path);
   } catch (error) {
     message.error(error.message);
+  } finally {
+    $setLoading('unset');
+    setSubmitting(false);
   }
-
-  setSubmitting(false);
 }
 
+export const privateEmailAuthComposition = compose(
+  graphql(loginMutation, { name: 'login' }),
+  withFormik({
+    handleSubmit: privateHandleSubmit,
+    mapPropsToValues: () => ({}),
+    validationSchema: LOGIN_SCHEMA,
+  }),
+);
+
+
+// Main Composition
+
 export default {
-  path: '/login',
+  path: '/entrar',
   render: (routeProps) => compose(
     renderComponent,
-    graphql(loginMutation, { name: 'login' }),
     withProps({ routeProps, ...privateInjectProps(history) }),
-    withFormik({
-      handleSubmit: privateHandleSubmit,
-      mapPropsToValues: () => ({}),
-      validationSchema: LOGIN_SCHEMA,
-    }),
-    redirectIfAuthenticated('/dashboard'),
+    privateSocialAuthComposition,
+    privateEmailAuthComposition,
+    redirectIfAuthenticated(dashboard.path),
   )(Login),
 };

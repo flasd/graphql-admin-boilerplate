@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { setLocalStorageKey } from 'fetch-auth-manager';
 import ptBR from 'antd/es/locale/pt_BR';
 import filterConsole from 'filter-console';
+// This needs to come before App import!!
+import './constants/ant.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import history from './services/history';
@@ -12,7 +14,9 @@ import 'nanoreset';
 import '@flasd/focus-fix';
 import '@flasd/focus-fix/styles.css';
 import 'view-units';
+// This needs to come after App import!
 import './constants/overrides.css';
+
 
 setLocalStorageKey('b7181ffb6932f718c818b7f8a55d66a0227ac293');
 

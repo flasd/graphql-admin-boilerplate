@@ -16,7 +16,9 @@ import { composePath } from '../../../components/Other/Switcher';
 import Login from './Login';
 import authPath from '../A.path';
 import dashboard from '../../dashboard';
-import createAccount from '../createAccount';
+import createAccountPath from '../createAccount/CreateAccount.path';
+import { makeRequired, emailRule, passwordRule } from '../../../constants/yup-fields';
+import path from './Login.path';
 
 const firebase = import('../../../services/firebase');
 
@@ -24,7 +26,7 @@ const firebase = import('../../../services/firebase');
 
 export function privateInjectProps($history) {
   return {
-    navigateToSignUp: () => $history.push(composePath(createAccount.path, authPath)),
+    navigateToSignUp: () => $history.push(composePath(createAccountPath, authPath)),
     history: $history,
   };
 }
@@ -118,7 +120,7 @@ export function privateSignInWithProvider(props) {
 
       await createSocialAccount({ variables: { firebaseIdToken: idToken } });
       await socialLogin({ variables: { firebaseIdToken: idToken } });
-      $history.push(dashboard.path);
+      $history.replace(dashboard.path);
     } catch (error) {
       message.error('CHANGE THIS');
       $setLoading('unset');
@@ -145,8 +147,8 @@ export const loginMutation = gql`
 `;
 
 export const LOGIN_SCHEMA = yup.object().shape({
-  email: yup.string().email('E-mail inválido').required('Campo obrigarório'),
-  password: yup.string().required('Campo obrigarório'),
+  email: makeRequired(emailRule),
+  password: makeRequired(passwordRule),
 });
 
 export async function privateHandleSubmit(values, { props, setSubmitting }) {
@@ -156,7 +158,7 @@ export async function privateHandleSubmit(values, { props, setSubmitting }) {
 
   try {
     await login({ variables: { ...values } });
-    props.history.push(dashboard.path);
+    props.history.replace(dashboard.path);
   } catch (error) {
     message.error(error.message);
   } finally {
@@ -178,7 +180,7 @@ export const privateEmailAuthComposition = compose(
 // Main Composition
 
 export default {
-  path: '/entrar',
+  path,
   render: (routeProps) => compose(
     renderComponent,
     withProps({ routeProps, ...privateInjectProps(history) }),

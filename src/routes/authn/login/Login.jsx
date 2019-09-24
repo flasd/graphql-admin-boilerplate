@@ -14,7 +14,7 @@ import AuthHeader from '../../../components/DataDisplay/AuthHeader';
 import { composePath } from '../../../components/Other/Switcher';
 import authPath from '../A.path';
 import recoverPassword from '../recoverPassword';
-import Spacer from '../../../components/Other/Spacer';
+import Spacer from '../../../components/General/Spacer';
 
 const { Paragraph } = Typography;
 
@@ -30,7 +30,7 @@ export default function Login(props) {
 
   return (
     <div>
-      <Helmet title="Acesse sua conta" />
+      <Helmet title="Entrar - Acesse sua conta" />
 
       <AuthHeader title="Entrar" subTitle="Acesse sua conta" />
 
@@ -39,7 +39,7 @@ export default function Login(props) {
         iconBefore="user"
         component={Email}
         label="E-mail"
-        disabled={emailLoading || facebookLoading || googleLoading}
+        disabled={facebookLoading || googleLoading}
       />
       <Field
         name="password"
@@ -47,7 +47,7 @@ export default function Login(props) {
         label="Senha"
         type={INPUT_TYPES.PASSOWRD}
         onPressEnter={submitForm}
-        disabled={emailLoading || facebookLoading || googleLoading}
+        disabled={facebookLoading || googleLoading}
       />
       <Spacer space={12} />
       <Button
@@ -103,7 +103,7 @@ export default function Login(props) {
       <Divider className={styles.divider} />
 
       <Button block onClick={navigateToSignUp}>
-        Criar sua conta
+        Não tem conta? Crie agora
       </Button>
     </div>
   );

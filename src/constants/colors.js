@@ -16,6 +16,20 @@ export const white = '#ffffff';
 export const black = '#111111';
 export const silver = '#dddddd';
 
+export const primaryColor = '#1890ff'; // primary color for all components
+export const linkColor = '#1890ff'; // link color
+export const successColor = '#52c41a'; // success state color
+export const warningColor = '#faad14'; // warning state color
+export const errorColor = '#f5222d'; // error state color
+export const fontSizeBase = '14px'; // major text font size
+export const headingColor = 'rgba(0, 0, 0, 0.85)'; // heading text color
+export const textColor = 'rgba(0, 0, 0, 0.65)'; // major text color
+export const textColorSecondary = 'rgba(0, 0, 0, .45)'; // secondary text color
+export const disabledColor = 'rgba(0, 0, 0, .25)'; // disable state color
+export const borderRadiusBase = '4px'; // major border radius
+export const borderColorBase = '#d9d9d9'; // major border color
+export const boxShadowBase = '0 2px 8px rgba(0, 0, 0, 0.15)'; // major shadow for layers
+
 export const facebookBlue = '#3b5998';
 export const googleBlue = '#4285f4';
 export const googleRed = '#ea4335';

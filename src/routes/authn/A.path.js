@@ -1,1 +1,1 @@
-export default '/an';
+export default '/s';

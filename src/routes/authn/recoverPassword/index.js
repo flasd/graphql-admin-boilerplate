@@ -4,7 +4,7 @@ import renderComponent from '../../../components/HOC/renderComponent';
 import RecoverPassword from './RecoverPassword';
 
 export default {
-  path: '/recover-password',
+  path: '/recuperar-senha',
   render: (routeProps) => compose(
     renderComponent,
     withProps(routeProps),

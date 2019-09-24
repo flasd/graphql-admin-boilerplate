@@ -6,14 +6,24 @@ export const container = css`
   justify-content: center;
 `;
 
-export const card = css`
-  min-width: 300px;
-  max-width: 300px;
-  animation: fadeInRight 200ms ease;
+export const POP = css`
+  animation: fadeInLeft 200ms ease;
 
-  @media (min-width: 768px) {
-    min-width: 400px;
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translate3d(-20px, 0, 0);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
   }
+`;
+
+export const PUSH = css`
+  animation: fadeInRight 200ms ease;
 
   @keyframes fadeInRight {
     from {
@@ -25,5 +35,33 @@ export const card = css`
       opacity: 1;
       transform: translate3d(0, 0, 0);
     }
+  }
+`;
+
+export const card = css`
+  min-width: 300px;
+  max-height: 548px;
+  overflow: scroll;
+  max-width: 300px;
+
+  @media (min-height: 570px) {
+    overflow: hidden;
+    max-height: unset;
+  }
+
+  @media (min-width: 340px) {
+    min-width: 320px;
+  }
+
+  @media (min-width: 375px) {
+    min-width: 355px;
+  }
+
+  @media (min-width: 400px) {
+    min-width: 380px;
+  }
+
+  @media (min-width: 425px) {
+    min-width: 420px;
   }
 `;

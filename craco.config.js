@@ -22,7 +22,7 @@ module.exports = {
     options: {
       customizeThemeLessPath: path.join(
         __dirname,
-        'src/constans/antTheme.less',
+        'src/constants/antTheme.less',
       ),
     },
   }, {

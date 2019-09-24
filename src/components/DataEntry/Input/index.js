@@ -9,4 +9,6 @@ export function privateInjectProps(props) {
   };
 }
 
+export { INPUT_TYPES };
+
 export default withProps(privateInjectProps)(Input);

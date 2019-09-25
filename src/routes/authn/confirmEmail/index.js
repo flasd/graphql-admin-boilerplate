@@ -8,7 +8,6 @@ import renderComponent from '../../../components/HOC/renderComponent';
 import ConfirmEmail from './ConfirmEmail';
 import history from '../../../services/history';
 import { composePath } from '../../../components/Other/Switcher';
-import dashboard from '../../dashboard';
 import APath from '../A.path';
 import LoginPath from '../login/Login.path';
 
@@ -16,7 +15,6 @@ export function privateInjectProps(routeProps, $history, $message) {
   return {
     ...routeProps,
     history: $history,
-    dashboardUrl: dashboard.path,
     message: $message,
     loginPath: composePath(LoginPath, APath),
   };
@@ -37,13 +35,13 @@ export async function privateComponentDidMount() {
     setConfirmationError,
     history: $history,
     message: $message,
-    dashboardUrl,
+    loginPath,
   } = this.props;
 
   try {
     await confirmEmail({ variables: { confirmationToken: confirmToken } });
     $message.success('E-mail confirmado!');
-    $history.push(dashboardUrl);
+    $history.push(loginPath);
   } catch (error) {
     setConfirmationError(true);
   }

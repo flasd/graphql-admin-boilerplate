@@ -20,14 +20,14 @@ import authPath from '../A.path';
 import history from '../../../services/history';
 import { composePath } from '../../../components/Other/Switcher';
 import path from './CreateAccount.path';
-import tosPath from '../tos/TOS.path';
-import ppPath from '../privacyPolicy/PrivacyPolicy.path';
+import tosPath from '../../termsOfService/TermsOfService.path';
+import ppPath from '../../privacyPolicy/PrivacyPolicy.path';
 
 export function privateInjectProps(routeProps, $history, $message) {
   return {
     ...routeProps,
-    tosPath: composePath(tosPath, authPath),
-    ppPath: composePath(ppPath, authPath),
+    tosPath,
+    ppPath,
     navigateToLogin: () => $history.push(composePath(loginPath, authPath)),
     message: $message,
   };
@@ -48,7 +48,7 @@ export const CREATE_ACCOUNT_SCHEMA = makeSchema({
 });
 
 export async function privateHandleSubmit(values, formikBag) {
-  const { props, setSubmitting } = formikBag;
+  const { props, setSubmitting, setErrors } = formikBag;
   const { createAccount, setAccountCreated, message: $message } = props;
 
   try {
@@ -64,8 +64,16 @@ export async function privateHandleSubmit(values, formikBag) {
 
     setAccountCreated(true);
   } catch (error) {
-    $message.error('Algo deu errado ao criar sua conta... Tente novamente!');
     setSubmitting(false);
+
+    if (error.message.includes('taken')) {
+      setErrors({
+        email: 'E-mail já cadastrado!',
+      });
+      return;
+    }
+
+    $message.error('Algo deu errado ao criar sua conta... Tente novamente!');
   }
 }
 

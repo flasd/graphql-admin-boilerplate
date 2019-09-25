@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Field } from 'formik';
 import { Helmet } from 'react-helmet';
 import { Button, Divider, Result } from 'antd';
-import { Link } from 'react-router-dom';
 import AuthHeader from '../../../components/DataDisplay/AuthHeader';
 import Input, { INPUT_TYPES } from '../../../components/DataEntry/Input';
 import Email from '../../../components/DataEntry/Email';
@@ -22,9 +21,9 @@ export default function CreateAccount(props) {
   const terms = (
     <span>
       {'Lí e concordo com os ambos os '}
-      <Link to={tosPath}>Termos de Serviço</Link>
+      <a href={tosPath} target="_blank" rel="noopener noreferrer">Termos de Serviço</a>
       {' e '}
-      <Link to={ppPath}>Política de Privacidade</Link>
+      <a href={ppPath} target="_blank" rel="noopener noreferrer">Política de Privacidade</a>
       {'.'}
     </span>
   );

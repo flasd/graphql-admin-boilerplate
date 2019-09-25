@@ -10,7 +10,6 @@ import createAccount from './createAccount';
 import A from './A';
 import path from './A.path';
 import wrapIn from '../../components/HOC/wrapIn';
-import tos from './tos';
 import privacyPolicy from './privacyPolicy';
 
 export const privateRoutes = [
@@ -19,7 +18,6 @@ export const privateRoutes = [
   login,
   recoverPassword,
   resetPassword,
-  tos,
   privacyPolicy,
 ];
 

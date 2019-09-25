@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function PrivacyPolicy() {
-  return <div>Política de privacidade</div>;
+  return <div>Política de Privacidade</div>;
 }

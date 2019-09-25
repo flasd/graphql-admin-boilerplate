@@ -39,7 +39,6 @@ export function privateOptions(props) {
     variables: {
       recoveryToken: resetToken,
     },
-    fetchPolicy: 'no-cache',
     onCompleted: ({ recoveryTokenExists }) => {
       doneLoading(recoveryTokenExists);
     },
@@ -103,7 +102,7 @@ export default {
       name: 'recoveryTokenExists',
       options: privateOptions,
     }),
-    graphql(recoverPasswordMutation, { name: 'recoverPassword', options: { fetchPolicy: 'no-cache' } }),
+    graphql(recoverPasswordMutation, { name: 'recoverPassword' }),
     withFormik({
       handleSubmit: privateHandleSubmit,
       mapPropsToValues: () => ({}),

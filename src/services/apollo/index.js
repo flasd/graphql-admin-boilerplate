@@ -100,6 +100,16 @@ export async function getClient(cb) {
     new ApolloClient({
       link,
       cache,
+      defaultOptions: {
+        watchQuery: {
+          fetchPolicy: 'no-cache',
+          errorPolicy: 'ignore',
+        },
+        query: {
+          fetchPolicy: 'no-cache',
+          errorPolicy: 'all',
+        },
+      },
     }),
   );
 }

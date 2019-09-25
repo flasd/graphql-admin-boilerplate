@@ -8,6 +8,13 @@ import renderComponent from '../../../components/HOC/renderComponent';
 import RecoverPassword from './RecoverPassword';
 import { makeSchema, makeRequired, emailRule } from '../../../constants/yup-fields';
 
+export function privateInjectProps(routeProps, $message) {
+  return {
+    ...routeProps,
+    message: $message,
+  };
+}
+
 export const sendRecoveryEmailMutation = gql`
   mutation recoverPassword($email: EmailAddress!) {
     sendPasswordRecoveryEmail(email: $email)
@@ -19,14 +26,14 @@ export const RECOVER_PASSWORD = makeSchema({
 });
 
 export async function privateHandleSubmit(values, { props, setSubmitting }) {
-  const { sendRecoveryEmail, setEmailSent } = props;
+  const { sendRecoveryEmail, setEmailSent, message: $message } = props;
 
   try {
     await sendRecoveryEmail({ variables: { email: values.email } });
     setEmailSent(true);
   } catch (error) {
     setSubmitting(false);
-    message.error('Usuário não encontrado!');
+    $message.error('Usuário não encontrado!');
   }
 }
 
@@ -34,7 +41,7 @@ export default {
   path: '/recuperar-senha',
   render: (routeProps) => compose(
     renderComponent,
-    withProps(routeProps),
+    withProps(privateInjectProps(routeProps, message)),
     withState('emailSent', 'setEmailSent', false),
     graphql(sendRecoveryEmailMutation, { name: 'sendRecoveryEmail' }),
     withFormik({

@@ -13,6 +13,16 @@ import wrapIn from '../../components/HOC/wrapIn';
 import tos from './tos';
 import privacyPolicy from './privacyPolicy';
 
+export const privateRoutes = [
+  confirmEmail,
+  createAccount,
+  login,
+  recoverPassword,
+  resetPassword,
+  tos,
+  privacyPolicy,
+];
+
 export default {
   router: true,
   path,
@@ -20,15 +30,7 @@ export default {
     renderComponent,
     withProps({
       ...routeProps,
-      routes: [
-        confirmEmail,
-        createAccount,
-        login,
-        recoverPassword,
-        resetPassword,
-        tos,
-        privacyPolicy,
-      ],
+      routes: privateRoutes,
       fallbackPath: composePath(login.path, routeProps),
     }),
     compose(

@@ -84,11 +84,11 @@ export async function privateHandleSubmit(values, { props, setSubmitting }) {
   }
 }
 
-export function injectProps(routeProps) {
+export function injectProps(routeProps, $history, $message) {
   return {
     ...routeProps,
-    history,
-    message,
+    history: $history,
+    message: $message,
     loginPath: composePath(LoginPath, APath),
   };
 }
@@ -97,7 +97,7 @@ export default {
   path: '/redefinir-senha/:resetToken',
   render: (routeProps) => compose(
     renderComponent,
-    withProps(injectProps(routeProps)),
+    withProps(injectProps(routeProps, history, message)),
     withStateHandlers(privateInitialState, privateStateHandlers),
     graphql(recoveryTokenExistsQuery, {
       name: 'recoveryTokenExists',

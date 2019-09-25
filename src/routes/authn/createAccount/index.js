@@ -23,12 +23,13 @@ import path from './CreateAccount.path';
 import tosPath from '../tos/TOS.path';
 import ppPath from '../privacyPolicy/PrivacyPolicy.path';
 
-export function privateInjectProps(routeProps, $history) {
+export function privateInjectProps(routeProps, $history, $message) {
   return {
     ...routeProps,
     tosPath: composePath(tosPath, authPath),
     ppPath: composePath(ppPath, authPath),
     navigateToLogin: () => $history.push(composePath(loginPath, authPath)),
+    message: $message,
   };
 }
 
@@ -48,7 +49,7 @@ export const CREATE_ACCOUNT_SCHEMA = makeSchema({
 
 export async function privateHandleSubmit(values, formikBag) {
   const { props, setSubmitting } = formikBag;
-  const { createAccount, setAccountCreated } = props;
+  const { createAccount, setAccountCreated, message: $message } = props;
 
   try {
     await createAccount({
@@ -63,7 +64,7 @@ export async function privateHandleSubmit(values, formikBag) {
 
     setAccountCreated(true);
   } catch (error) {
-    message.error('CHANGE THIS!!');
+    $message.error('CHANGE THIS!!');
     setSubmitting(false);
   }
 }
@@ -78,7 +79,7 @@ export default {
   path,
   render: (routeProps) => compose(
     renderComponent,
-    withProps(privateInjectProps(routeProps, history)),
+    withProps(privateInjectProps(routeProps, history, message)),
     withState('accountCreated', 'setAccountCreated', false),
     graphql(createAccountMutation, { name: 'createAccount' }),
     withFormik({

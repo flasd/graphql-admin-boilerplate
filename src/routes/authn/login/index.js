@@ -24,10 +24,12 @@ const firebase = import('../../../services/firebase');
 
 // General
 
-export function privateInjectProps($history) {
+export function privateInjectProps(routeProps, $history, $message) {
   return {
+    ...routeProps,
     navigateToSignUp: () => $history.push(composePath(createAccountPath, authPath)),
     history: $history,
+    message: $message,
   };
 }
 
@@ -101,6 +103,7 @@ export function privateSignInWithProvider(props) {
     socialLogin,
     setLoading: $setLoading,
     history: $history,
+    message: $message,
   } = props;
 
   return async (authProvider) => {
@@ -122,7 +125,7 @@ export function privateSignInWithProvider(props) {
       await socialLogin({ variables: { firebaseIdToken: idToken } });
       $history.replace(dashboard.path);
     } catch (error) {
-      message.error('CHANGE THIS');
+      $message.error('CHANGE THIS');
       $setLoading('unset');
     }
   };
@@ -151,7 +154,7 @@ export const LOGIN_SCHEMA = yup.object().shape({
   password: makeRequired(passwordRule),
 });
 
-export async function privateHandleSubmit(values, { props, setSubmitting }) {
+export async function privateHandleSubmit(values, { props, setSubmitting, setErrors }) {
   const { login, setLoading: $setLoading } = props;
 
   $setLoading('email');
@@ -160,8 +163,9 @@ export async function privateHandleSubmit(values, { props, setSubmitting }) {
     await login({ variables: { ...values } });
     props.history.replace(dashboard.path);
   } catch (error) {
-    message.error(error.message);
-  } finally {
+    setErrors({
+      email: 'Email não cadastrado ou senha inválida.',
+    });
     $setLoading('unset');
     setSubmitting(false);
   }
@@ -183,7 +187,7 @@ export default {
   path,
   render: (routeProps) => compose(
     renderComponent,
-    withProps({ routeProps, ...privateInjectProps(history) }),
+    withProps(privateInjectProps(routeProps, history, message)),
     privateSocialAuthComposition,
     privateEmailAuthComposition,
     redirectIfAuthenticated(dashboard.path),

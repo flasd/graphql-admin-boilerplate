@@ -20,7 +20,7 @@ export default function ConfirmEmail(props) {
   );
 
   if (confirmationError) {
-    return <Result status="500" title="Deu errado..." subTitle={subTitle} />;
+    return <Result status="500" title="Algo deu errado..." subTitle={subTitle} />;
   }
 
   return (

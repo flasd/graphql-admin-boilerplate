@@ -10,7 +10,7 @@ import createAccount from './createAccount';
 import A from './A';
 import path from './A.path';
 import wrapIn from '../../components/HOC/wrapIn';
-import privacyPolicy from './privacyPolicy';
+import privacyPolicy from '../privacyPolicy';
 
 export const privateRoutes = [
   confirmEmail,

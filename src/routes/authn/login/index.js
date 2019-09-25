@@ -163,6 +163,10 @@ export async function privateHandleSubmit(values, { props, setSubmitting, setErr
     await login({ variables: { ...values } });
     props.history.replace(dashboard.path);
   } catch (error) {
+    if (error.message.includes('429')) {
+      return;
+    }
+
     setErrors({
       email: 'Email não cadastrado ou senha inválida.',
     });

@@ -8,16 +8,16 @@ import { WebSocketLink } from 'apollo-link-ws';
 import { RetryLink } from 'apollo-link-retry';
 import { getMainDefinition } from 'apollo-utilities';
 import QueueLink from 'apollo-link-queue';
+import { message as $message } from 'antd';
 import { createWsParams, createAuthManagerLink } from 'fetch-auth-manager';
 
 const GRAPHQL_ENDPOINT = process.env.REACT_APP_GRAPHQL_ENDPOINT;
 
 export function handleErrors({ graphQLErrors, networkError }) {
-  // eslint-disable-next-line no-undef
   if (process.env.NODE_ENV) {
     /* eslint-disable no-console */
     if (graphQLErrors) {
-      graphQLErrors.map(({ message, locations, path }) => console.log(
+      graphQLErrors.forEach(({ message, locations, path }) => console.log(
         `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
       ));
     }
@@ -25,6 +25,14 @@ export function handleErrors({ graphQLErrors, networkError }) {
       console.log(`[Network error]: ${networkError}`);
     }
     /* eslint-enable no-console */
+  }
+
+  if (graphQLErrors) {
+    graphQLErrors.forEach(({ message }) => {
+      if (/^429:\d+$/.test(message)) {
+        $message.warning('Muitas requisições. Tente novamente em 24 horas.');
+      }
+    });
   }
 }
 

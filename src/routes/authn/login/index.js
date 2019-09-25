@@ -125,7 +125,7 @@ export function privateSignInWithProvider(props) {
       await socialLogin({ variables: { firebaseIdToken: idToken } });
       $history.replace(dashboard.path);
     } catch (error) {
-      $message.error('CHANGE THIS');
+      $message.error(`Algo deu errado ao tentar atenticar com ${authProvider}.`);
       $setLoading('unset');
     }
   };

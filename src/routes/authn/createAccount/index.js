@@ -64,7 +64,7 @@ export async function privateHandleSubmit(values, formikBag) {
 
     setAccountCreated(true);
   } catch (error) {
-    $message.error('CHANGE THIS!!');
+    $message.error('Algo deu errado ao criar sua conta... Tente novamente!');
     setSubmitting(false);
   }
 }

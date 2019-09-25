@@ -78,7 +78,7 @@ export async function privateHandleSubmit(values, { props, setSubmitting }) {
 
     $history.replace(LoginPath);
   } catch (error) {
-    $message.error('Erro ao redefinir a senha.');
+    $message.error('Token expirado ou algo inesperado aconteceu...');
     setSubmitting(false);
   }
 }

@@ -2,6 +2,7 @@ import get from 'lodash.get';
 import { withProps } from 'recompose';
 import sortBy from 'lodash.sortby';
 import memoize from 'lodash.memoize';
+import { message } from 'antd';
 import Switcher from './Switcher';
 
 
@@ -48,11 +49,12 @@ export function privateSortRoutes(routes) {
 
 export const privateMemoizedSortRoutes = memoize(privateSortRoutes);
 
-export function privateInjectProps(props) {
-  return {
+export function privateInjectProps($message) {
+  return (props) => ({
     composePath,
     routes: privateMemoizedSortRoutes(props.routes),
-  };
+    message: $message,
+  });
 }
 
-export default withProps(privateInjectProps)(Switcher);
+export default withProps(privateInjectProps(message))(Switcher);

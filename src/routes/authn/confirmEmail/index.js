@@ -4,16 +4,14 @@ import {
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { message } from 'antd';
-import renderComponent from '../../../components/HOC/renderComponent';
 import ConfirmEmail from './ConfirmEmail';
 import history from '../../../services/history';
 import { composePath } from '../../../components/Other/Switcher';
 import APath from '../A.path';
 import LoginPath from '../login/Login.path';
 
-export function privateInjectProps(routeProps, $history, $message) {
+export function privateInjectProps($history, $message) {
   return {
-    ...routeProps,
     history: $history,
     message: $message,
     loginPath: composePath(LoginPath, APath),
@@ -49,9 +47,8 @@ export async function privateComponentDidMount() {
 
 export default {
   path: '/confirmar-email/:confirmToken',
-  render: (routeProps) => compose(
-    renderComponent,
-    withProps(privateInjectProps(routeProps, history, message)),
+  component: compose(
+    withProps(privateInjectProps(history, message)),
     graphql(confirmEmailMutation, { name: 'confirmEmail' }),
     withState('confirmationError', 'setConfirmationError', false),
     lifecycle({

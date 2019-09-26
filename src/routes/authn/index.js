@@ -1,7 +1,6 @@
 import { compose, withProps } from 'recompose';
 import { withRouter } from 'react-router-dom';
 import login from './login';
-import renderComponent from '../../components/HOC/renderComponent';
 import Switcher, { composePath } from '../../components/Other/Switcher';
 import recoverPassword from './recoverPassword';
 import resetPassword from './resetPassword';
@@ -24,13 +23,11 @@ export const privateRoutes = [
 export default {
   router: true,
   path,
-  render: (routeProps) => compose(
-    renderComponent,
-    withProps({
-      ...routeProps,
+  component: compose(
+    withProps((props) => ({
       routes: privateRoutes,
-      fallbackPath: composePath(login.path, routeProps),
-    }),
+      fallbackPath: composePath(login.path, props),
+    })),
     compose(
       wrapIn,
       withRouter,

@@ -4,13 +4,11 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { message } from 'antd';
 import redirectIfAuthenticated from '../../../components/HOC/redirectIfAuthenticated';
-import renderComponent from '../../../components/HOC/renderComponent';
 import RecoverPassword from './RecoverPassword';
 import { makeSchema, makeRequired, emailRule } from '../../../constants/yup-fields';
 
-export function privateInjectProps(routeProps, $message) {
+export function privateInjectProps($message) {
   return {
-    ...routeProps,
     message: $message,
   };
 }
@@ -39,9 +37,8 @@ export async function privateHandleSubmit(values, { props, setSubmitting }) {
 
 export default {
   path: '/recuperar-senha',
-  render: (routeProps) => compose(
-    renderComponent,
-    withProps(privateInjectProps(routeProps, message)),
+  component: compose(
+    withProps(privateInjectProps(message)),
     withState('emailSent', 'setEmailSent', false),
     graphql(sendRecoveryEmailMutation, { name: 'sendRecoveryEmail' }),
     withFormik({

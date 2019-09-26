@@ -4,7 +4,6 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { message } from 'antd';
 import redirectIfAuthenticated from '../../../components/HOC/redirectIfAuthenticated';
-import renderComponent from '../../../components/HOC/renderComponent';
 import CreateAccount from './CreateAccount';
 import {
   confirmPasswordRule,
@@ -23,9 +22,8 @@ import path from './CreateAccount.path';
 import tosPath from '../../termsOfService/TermsOfService.path';
 import ppPath from '../../privacyPolicy/PrivacyPolicy.path';
 
-export function privateInjectProps(routeProps, $history, $message) {
+export function privateInjectProps($history, $message) {
   return {
-    ...routeProps,
     tosPath,
     ppPath,
     navigateToLogin: () => $history.push(composePath(loginPath, authPath)),
@@ -85,9 +83,8 @@ export function privateMapPropsToValues() {
 
 export default {
   path,
-  render: (routeProps) => compose(
-    renderComponent,
-    withProps(privateInjectProps(routeProps, history, message)),
+  component: compose(
+    withProps(privateInjectProps(history, message)),
     withState('accountCreated', 'setAccountCreated', false),
     graphql(createAccountMutation, { name: 'createAccount' }),
     withFormik({

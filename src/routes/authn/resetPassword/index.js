@@ -6,7 +6,6 @@ import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
 import { message } from 'antd';
 import ResetPassword from './ResetPassword';
-import renderComponent from '../../../components/HOC/renderComponent';
 import history from '../../../services/history';
 import LoginPath from '../login/Login.path';
 import { composePath } from '../../../components/Other/Switcher';
@@ -84,9 +83,8 @@ export async function privateHandleSubmit(values, { props, setSubmitting }) {
   }
 }
 
-export function injectProps(routeProps, $history, $message) {
+export function privateInjectProps($history, $message) {
   return {
-    ...routeProps,
     history: $history,
     message: $message,
     loginPath: composePath(LoginPath, APath),
@@ -95,9 +93,8 @@ export function injectProps(routeProps, $history, $message) {
 
 export default {
   path: '/redefinir-senha/:resetToken',
-  render: (routeProps) => compose(
-    renderComponent,
-    withProps(injectProps(routeProps, history, message)),
+  component: compose(
+    withProps(privateInjectProps(history, message)),
     withStateHandlers(privateInitialState, privateStateHandlers),
     graphql(recoveryTokenExistsQuery, {
       name: 'recoveryTokenExists',

@@ -11,7 +11,6 @@ import { graphql } from 'react-apollo';
 import { message } from 'antd';
 import history from '../../../services/history';
 import redirectIfAuthenticated from '../../../components/HOC/redirectIfAuthenticated';
-import renderComponent from '../../../components/HOC/renderComponent';
 import { composePath } from '../../../components/Other/Switcher';
 import Login from './Login';
 import authPath from '../A.path';
@@ -24,9 +23,8 @@ const firebase = import('../../../services/firebase');
 
 // General
 
-export function privateInjectProps(routeProps, $history, $message) {
+export function privateInjectProps($history, $message) {
   return {
-    ...routeProps,
     navigateToSignUp: () => $history.push(composePath(createAccountPath, authPath)),
     history: $history,
     message: $message,
@@ -189,9 +187,8 @@ export const privateEmailAuthComposition = compose(
 
 export default {
   path,
-  render: (routeProps) => compose(
-    renderComponent,
-    withProps(privateInjectProps(routeProps, history, message)),
+  component: compose(
+    withProps(privateInjectProps(history, message)),
     privateSocialAuthComposition,
     privateEmailAuthComposition,
     redirectIfAuthenticated(dashboard.path),

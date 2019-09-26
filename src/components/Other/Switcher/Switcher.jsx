@@ -11,6 +11,7 @@ export default function Switcher(props) {
         <Route
           key={route.path}
           path={`${composePath(route.path, props)}`}
+          component={route.component}
           render={route.render}
           exact={!route.router}
         />
@@ -24,7 +25,8 @@ Switcher.propTypes = {
   routes: PropTypes.arrayOf(
     PropTypes.shape({
       path: PropTypes.string.isRequired,
-      render: PropTypes.func.isRequired,
+      render: PropTypes.func,
+      component: PropTypes.func,
       router: PropTypes.bool,
     }),
   ).isRequired,

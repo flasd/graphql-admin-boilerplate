@@ -24,10 +24,26 @@ export function privateSortRoutes(routes) {
   const sortedRouters = sortBy(routers, ['path.length']).reverse();
   const sortedOtherRoutes = sortBy(otherRoutes, ['path.length', privateExtractParamCount]).reverse();
 
-  return [
+  const finalRoutes = [
     ...sortedRouters,
     ...sortedOtherRoutes,
   ];
+
+  if (process.env.NODE_ENV === 'development') {
+    finalRoutes.forEach((route) => {
+      /* eslint-disable no-console */
+      if (route.render && route.render.toString().includes('=>')) {
+        console.warn(`Don't use arrow functions in render methods!\n Problem in ${route.path} route definition.`);
+      }
+
+      if (route.component && route.component.toString().includes('=>')) {
+        console.warn(`Don't use arrow functions in component definitions!\n Problem in ${route.path} route definition.`);
+      }
+      /* eslint-enable */
+    });
+  }
+
+  return finalRoutes;
 }
 
 export const privateMemoizedSortRoutes = memoize(privateSortRoutes);

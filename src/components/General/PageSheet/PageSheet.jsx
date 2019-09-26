@@ -3,6 +3,7 @@ import { Layout } from 'antd';
 import { Link } from 'react-router-dom';
 import classnames from 'classnames';
 import * as styles from './PageSheet.styles';
+import { childrenPropTypes } from '../../../constants/prop-types';
 
 const { Content, Footer } = Layout;
 
@@ -16,3 +17,7 @@ export default function PageSheet({ children }) {
     </Layout>
   );
 }
+
+PageSheet.propTypes = {
+  children: childrenPropTypes.isRequired,
+};

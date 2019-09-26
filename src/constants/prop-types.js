@@ -21,3 +21,14 @@ export const optionPropTypes = PropTypes.arrayOf(
     disabled: PropTypes.bool,
   }),
 );
+
+export const childrenPropTypes = PropTypes.oneOfType([
+  PropTypes.string,
+  PropTypes.node,
+  PropTypes.arrayOf(
+    PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.node,
+    ]),
+  ),
+]);

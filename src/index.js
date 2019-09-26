@@ -3,18 +3,14 @@ import ReactDOM from 'react-dom';
 import { setLocalStorageKey } from 'fetch-auth-manager';
 import ptBR from 'antd/es/locale/pt_BR';
 import filterConsole from 'filter-console';
-// This needs to come before App import!!
-import './constants/ant.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
 import history from './services/history';
 import { getClient } from './services/apollo';
 
-import 'nanoreset';
+import App from './App';
 import '@flasd/focus-fix';
 import '@flasd/focus-fix/styles.css';
 import 'view-units';
-// This needs to come after App import!
 import './constants/overrides.css';
 
 

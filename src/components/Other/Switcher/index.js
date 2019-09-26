@@ -1,5 +1,7 @@
 import get from 'lodash.get';
 import { withProps } from 'recompose';
+import sortBy from 'lodash.sortby';
+import memoize from 'lodash.memoize';
 import Switcher from './Switcher';
 
 
@@ -11,6 +13,30 @@ export function composePath(path, props) {
   return `${get(props, ['match', 'path'], '')}/${path}`.replace(/\/{2,}/g, '/');
 }
 
-export default withProps({
-  composePath,
-})(Switcher);
+export function privateExtractParamCount(route) {
+  return (route.path.match(/:/g) || []).length;
+}
+
+export function privateSortRoutes(routes) {
+  const routers = routes.filter((route) => route.router);
+  const otherRoutes = routes.filter((route) => !route.router);
+
+  const sortedRouters = sortBy(routers, ['path.length']).reverse();
+  const sortedOtherRoutes = sortBy(otherRoutes, ['path.length', privateExtractParamCount]).reverse();
+
+  return [
+    ...sortedRouters,
+    ...sortedOtherRoutes,
+  ];
+}
+
+export const privateMemoizedSortRoutes = memoize(privateSortRoutes);
+
+export function privateInjectProps(props) {
+  return {
+    composePath,
+    routes: privateMemoizedSortRoutes(props.routes),
+  };
+}
+
+export default withProps(privateInjectProps)(Switcher);

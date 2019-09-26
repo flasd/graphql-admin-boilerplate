@@ -8,5 +8,5 @@ import privacyPolicy from './privacyPolicy';
 export default withProps({
   router: true,
   routes: [dashboard, authn, termsOfService, privacyPolicy],
-  fallbackPath: '',
+  fallbackPath: '/404',
 })(Switcher);

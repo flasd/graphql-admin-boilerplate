@@ -18,7 +18,7 @@
     "apollo-utilities": "^1.3.2",
     "byte-converter": "^0.1.4",
     "classnames": "^2.2.6",
-    "fetch-auth-manager": "^0.7.0",
+    "fetch-auth-manager": "^0.8.1",
     "filter-console": "^0.1.1",
     "firebase": "^6.6.2",
     "formik": "^1.5.8",

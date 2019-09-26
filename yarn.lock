@@ -4840,10 +4840,10 @@ fbjs@^0.8.0, fbjs@^0.8.1, fbjs@^0.8.15, fbjs@^0.8.16, fbjs@^0.8.9:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
-fetch-auth-manager@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/fetch-auth-manager/-/fetch-auth-manager-0.7.0.tgz#ce90b7958031bbfb7fbcc205819ed2bc29729709"
-  integrity sha512-P/FIlnt/ZFS3ITT7aZmUgYvhQo7z1vYpOEfb466Wz6Pf9mAE9ysNtRTIGWiItq2vCWprSc+Rpz/bsh4DdMQOsg==
+fetch-auth-manager@^0.8.1:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/fetch-auth-manager/-/fetch-auth-manager-0.8.1.tgz#6a8682625102b0f167144c3402e3488b58de4f14"
+  integrity sha512-yMeVEehKzfGpgsjrtZBKf9mDfvmqAHDIDTHmqVX86qtA6Br7zGVGySqegLsieJ6je1F0VaudiFPx+Dkk3ylg3w==
   dependencies:
     apollo-link "^1.2.13"
     apollo-utilities "^1.3.2"

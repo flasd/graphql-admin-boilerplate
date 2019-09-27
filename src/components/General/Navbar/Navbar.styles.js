@@ -1,5 +1,5 @@
 import { css } from 'linaria';
-import { white, primaryColor, errorColor } from '../../../constants/colors';
+import { white, primaryColor } from '../../../constants/colors';
 
 export const container = css`
   height: 60px;
@@ -21,21 +21,12 @@ export const trigger = css`
   }
 `;
 
-export const logoutTrigger = css`
- font-size: 20px;
-  line-height: 64px;
+export const user = css`
   padding: 0 24px;
-  padding-left: 0;
   cursor: pointer;
-  transition: color 0.3s;
-
-  &:hover {
-    color: ${errorColor};
-  }
 `;
 
-export const logoutTooltip = css`
-  & .ant-popover-message-title {
-    padding-left: 0;
-  }
+export const userName = css`
+  display: inline-block;
+  padding-left: 8px;
 `;

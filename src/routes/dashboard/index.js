@@ -37,8 +37,8 @@ export default {
   router: true,
   path: '/',
   component: compose(
+    privateRoute(composePath(LoginPath, APath)),
     withProps(privateInjectProps),
     privateDashboardComposition,
-    privateRoute(composePath(LoginPath, APath)),
   )(Switcher),
 };

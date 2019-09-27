@@ -1,5 +1,5 @@
-import { withProps } from 'recompose';
-import { logout } from 'fetch-auth-manager';
+import { withProps, compose } from 'recompose';
+import { logout, withAuth } from 'fetch-auth-manager';
 import Navbar from './Navbar';
 
 export function privateInjectProps($logout) {
@@ -8,4 +8,7 @@ export function privateInjectProps($logout) {
   };
 }
 
-export default withProps(privateInjectProps(logout))(Navbar);
+export default compose(
+  withProps(privateInjectProps(logout)),
+  withAuth,
+)(Navbar);

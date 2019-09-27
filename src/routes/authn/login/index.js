@@ -188,9 +188,9 @@ export const privateEmailAuthComposition = compose(
 export default {
   path,
   component: compose(
+    redirectIfAuthenticated(dashboard.path),
     withProps(privateInjectProps(history, message)),
     privateSocialAuthComposition,
     privateEmailAuthComposition,
-    redirectIfAuthenticated(dashboard.path),
   )(Login),
 };

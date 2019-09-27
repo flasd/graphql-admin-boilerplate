@@ -38,6 +38,7 @@ export async function privateHandleSubmit(values, { props, setSubmitting }) {
 export default {
   path: '/recuperar-senha',
   component: compose(
+    redirectIfAuthenticated('/dashboard'),
     withProps(privateInjectProps(message)),
     withState('emailSent', 'setEmailSent', false),
     graphql(sendRecoveryEmailMutation, { name: 'sendRecoveryEmail' }),
@@ -46,6 +47,5 @@ export default {
       mapValuesToPayload: () => ({}),
       validationSchema: RECOVER_PASSWORD,
     }),
-    redirectIfAuthenticated('/dashboard'),
   )(RecoverPassword),
 };

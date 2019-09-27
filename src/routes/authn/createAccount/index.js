@@ -84,6 +84,7 @@ export function privateMapPropsToValues() {
 export default {
   path,
   component: compose(
+    redirectIfAuthenticated('/dashboard'),
     withProps(privateInjectProps(history, message)),
     withState('accountCreated', 'setAccountCreated', false),
     graphql(createAccountMutation, { name: 'createAccount' }),
@@ -92,6 +93,5 @@ export default {
       mapPropsToValues: privateMapPropsToValues,
       validationSchema: CREATE_ACCOUNT_SCHEMA,
     }),
-    redirectIfAuthenticated('/dashboard'),
   )(CreateAccount),
 };

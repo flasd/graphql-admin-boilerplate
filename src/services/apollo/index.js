@@ -28,6 +28,15 @@ export function handleErrors({ graphQLErrors, networkError }) {
   }
 
   if (graphQLErrors) {
+    const authorizationError = graphQLErrors
+      .find(
+        ({ message }) => message.includes('You are not authorized for this resource'),
+      );
+
+    if (authorizationError) {
+      $message.warning('Você não tem permissão para acessar esse recurso.');
+    }
+
     graphQLErrors.forEach(({ message }) => {
       if (/^429:\d+$/.test(message)) {
         $message.warning('Muitas requisições. Tente novamente em 24 horas.');

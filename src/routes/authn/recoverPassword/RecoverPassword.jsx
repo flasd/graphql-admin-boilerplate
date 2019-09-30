@@ -4,7 +4,7 @@ import { Field } from 'formik';
 import { Helmet } from 'react-helmet';
 import { Button, Result } from 'antd';
 import Email from '../../../components/DataEntry/Email';
-import AuthHeader from '../../../components/DataDisplay/AuthHeader';
+import AuthHeader from '../../../components/General/AuthHeader';
 import Spacer from '../../../components/General/Spacer';
 
 export default function RecoverPassword(props) {

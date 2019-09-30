@@ -21,7 +21,7 @@ export default function Dashboard(props) {
       </Sidebar>
       <Layout>
         <Navbar collapsed={collapsed} toggleCollapse={toggleCollapse} />
-        <Content style={{ margin: '0 16px' }}>{children}</Content>
+        <Content>{children}</Content>
       </Layout>
     </Layout>
   );

@@ -7,6 +7,7 @@ export const container = css`
   padding: 0;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 1px;
 `;
 
 export const trigger = css`

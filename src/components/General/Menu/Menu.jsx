@@ -64,6 +64,8 @@ export default function Menu(props) {
 export const menuSubItemPropTypes = PropTypes.shape({
   href: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
+  icon: PropTypes.string,
+  subItems: PropTypes.arrayOf(PropTypes.object),
 });
 
 export const menuItemPropTypes = PropTypes.shape({

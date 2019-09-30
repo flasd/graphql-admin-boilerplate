@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Field } from 'formik';
 import { Helmet } from 'react-helmet';
 import { Button, Divider, Result } from 'antd';
-import AuthHeader from '../../../components/DataDisplay/AuthHeader';
+import AuthHeader from '../../../components/General/AuthHeader';
 import Input, { INPUT_TYPES } from '../../../components/DataEntry/Input';
 import Email from '../../../components/DataEntry/Email';
 import CheckBox from '../../../components/DataEntry/Checkbox';

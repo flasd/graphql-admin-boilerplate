@@ -10,7 +10,7 @@ import Email from '../../../components/DataEntry/Email';
 import Input from '../../../components/DataEntry/Input';
 import { INPUT_TYPES } from '../../../components/DataEntry/Input/Input';
 import * as styles from './Login.styles';
-import AuthHeader from '../../../components/DataDisplay/AuthHeader';
+import AuthHeader from '../../../components/General/AuthHeader';
 import { composePath } from '../../../components/Other/Switcher';
 import authPath from '../A.path';
 import recoverPassword from '../recoverPassword';

@@ -55,6 +55,7 @@
     "react-text-mask": "^5.4.3",
     "readable-bytes": "^1.0.4",
     "recompose": "^0.30.0",
+    "shortid": "^2.2.15",
     "subscriptions-transport-ws": "^0.9.16",
     "view-units": "^0.2.1",
     "yup": "^0.27.0"

@@ -5,3 +5,7 @@
 .ant-checkbox-wrapper {
   line-height: 22px;
 }
+
+.ant-table-pagination {
+  margin: 16px!important;
+}

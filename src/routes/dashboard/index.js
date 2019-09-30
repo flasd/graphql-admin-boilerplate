@@ -4,10 +4,11 @@ import privateRoute from '../../components/HOC/privateRoute';
 import wrapIn from '../../components/HOC/wrapIn';
 import Switcher, { composePath } from '../../components/Other/Switcher';
 import home from './home';
+import users from './users';
 import LoginPath from '../authn/login/Login.path';
 import APath from '../authn/A.path';
 
-export const privateRoutes = [home];
+export const privateRoutes = [home, users];
 
 export function privateInjectProps(props) {
   return {
@@ -25,10 +26,28 @@ export const privateStateHandlers = {
   toggleCollapse: ({ collapsed }) => () => ({ collapsed: !collapsed }),
 };
 
+export const privateNavbarItems = [
+  {
+    href: '/usuarios',
+    label: 'Usuários',
+    icon: 'user',
+  },
+  {
+    href: '/notificacoes',
+    label: 'Notificações',
+    icon: 'notification',
+  },
+  {
+    href: '/pagamentos',
+    label: 'Pagamentos',
+    icon: 'credit-card',
+  },
+];
+
 export const privateDashboardComposition = compose(
   withStateHandlers(privateInitialState, privateStateHandlers),
   withProps({
-    items: [],
+    items: privateNavbarItems,
   }),
   wrapIn(Dashboard),
 );

@@ -57,7 +57,7 @@ export default function Topics(props) {
         breadcrumbs={privateBreadCrumbs}
         action={{ type: 'primary', label: 'Criar Tópico', fn: openModal }}
       />
-      <Paper>
+      <Paper padding>
         <Input.Search
           onSearch={handleSearch}
           onChange={handleSearch}

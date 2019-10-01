@@ -7,11 +7,14 @@ import { container } from '../../../../components/DataEntry/Email/Email.styles';
 const { Item } = Menu;
 
 export default function UserActions(props) {
-  const { recoverPassword, deleteAccount } = props;
-
+  const {
+    recoverPassword, deleteAccount, role, makeAdmin, makeUser,
+  } = props;
   const overlay = (
     <Menu>
       <Item onClick={recoverPassword}>Recuperar Senha</Item>
+      {role !== 'admin' && <Item onClick={makeAdmin}>Tornar Admin</Item>}
+      {role === 'admin' && <Item onClick={makeUser}>Tornar Usuário</Item>}
       <Item onClick={deleteAccount}>Excluir Conta</Item>
     </Menu>
   );
@@ -28,4 +31,7 @@ export default function UserActions(props) {
 UserActions.propTypes = {
   recoverPassword: PropTypes.func.isRequired,
   deleteAccount: PropTypes.func.isRequired,
+  makeAdmin: PropTypes.func.isRequired,
+  makeUser: PropTypes.func.isRequired,
+  role: PropTypes.string.isRequired,
 };

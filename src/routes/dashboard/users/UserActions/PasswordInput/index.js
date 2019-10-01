@@ -1,5 +1,6 @@
 import { withFormik } from 'formik';
 import { compose, withProps } from 'recompose';
+import { message } from 'antd';
 import PasswordInput from './PasswordInput';
 import { makeSchema, passwordRule, makeRequired } from '../../../../../constants/yup-fields';
 
@@ -8,18 +9,16 @@ const PASSWORD_SCHEMA = makeSchema({
 });
 
 export async function privateHandleSubmit(values, { props }) {
-  const { privateDeleteAccount, id, message: $message } = props;
-  const { password } = values;
+  const {
+    mutate, $message, getVariables, onSuccess,
+  } = props;
 
   try {
-    await privateDeleteAccount({
-      variables: {
-        id,
-        password,
-      },
+    await mutate({
+      variables: getVariables(props, values),
     });
 
-    $message.success('Conta removida!');
+    $message.success(onSuccess);
   } catch (error) {
     $message.error(error.message);
   }
@@ -29,16 +28,23 @@ export function privateMapPropsToValues() {
   return {};
 }
 
-export function privateInjectProps(props) {
+export function privateInjectBinding(props) {
   const { setBinding, submitForm, isValid } = props;
   setBinding(submitForm, isValid);
+
+  return {};
+}
+
+export function privateInjectMessage($message) {
+  return () => ({ $message });
 }
 
 export default compose(
+  withProps(privateInjectMessage(message)),
   withFormik({
     handleSubmit: privateHandleSubmit,
     mapPropsToValues: privateMapPropsToValues,
     validationSchema: PASSWORD_SCHEMA,
   }),
-  withProps(privateInjectProps),
+  withProps(privateInjectBinding),
 )(PasswordInput);

@@ -1,10 +1,19 @@
 import gql from 'graphql-tag';
 import { compose, withProps } from 'recompose';
 import { graphql } from 'react-apollo';
+import get from 'lodash.get';
+import noop from 'lodash.noop';
 import Users from './Users';
 
 export function privateInjectProps(props) {
+  const totalUsers = get(props, ['data', 'listUsers', 'total'], 1);
+  const refetch = get(props, ['data', 'refetch'], noop);
+  const users = get(props, ['data', 'listUsers', 'docs'], [])
+    .map((user) => ({ ...user, refetch }));
+
   return {
+    totalUsers,
+    users,
     handleUpdate: (pagination, filters, sorter) => {
       const { current } = pagination;
       const { order } = sorter;

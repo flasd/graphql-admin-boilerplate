@@ -20,33 +20,95 @@ export const disableAccountAsAdminMutation = gql`
   }
 `;
 
+export const changeUserRoleMutation = gql`
+  mutation changeUserRole($userId: ID!, $role: Role!, $password: String!) {
+    changeUserRole(userId: $userId, role: $role, password: $password)
+  }
+`;
+
+export function privateMakePasswordConfirm(props, texts, fns) {
+  return () => {
+    // This properties are hointsted from the input component
+    // via the setBinding callback
+    let submitForm = noop;
+    let isValid = false;
+
+    const { modal, refetch } = props;
+
+    modal.confirm({
+      title: texts.title,
+      content: React.createElement(
+        PasswordInput,
+        {
+          ...props,
+          mutate: fns.mutation,
+          // This is the setBinding callback that get called
+          // every time the PasswordInput updates.
+          setBinding: (fn, valid) => {
+            submitForm = fn;
+            isValid = valid;
+          },
+
+          getVariables: fns.getVariables,
+          message: texts.message,
+          onSuccess: texts.onSuccess,
+        },
+      ),
+      onOk: (fn) => {
+        submitForm().then(isValid ? () => {
+          fn();
+
+          setTimeout(() => { refetch(); }, 100);
+        } : noop);
+      },
+    });
+  };
+}
+
 export function privateMapProps(props) {
   return {
-    deleteAccount: () => {
-      // This properties are hointsted from the input component
-      // via the setBinding callback
-      let submitForm = noop;
-      let isValid = false;
+    role: props.role,
 
-      const { email, modal } = props;
+    makeAdmin: privateMakePasswordConfirm(
+      props,
+      {
+        title: `Tornar ${props.email} Administrador?`,
+        message: 'Para confirmar essa mudança, digite sua senha e clique em \'Ok\'.',
+        onSuccess: 'Conta agora tem permissão de administrador!',
+      },
+      {
+        mutation: props.privateChangeUserRole,
+        getVariables: (ownProps, values) => ({ userId: ownProps.id, role: 'admin', password: values.password }),
+      },
+    ),
 
-      modal.confirm({
-        title: `Exclusão da conta ${email}`,
-        content: React.createElement(
-          PasswordInput,
-          {
-            ...props,
-            // This is the setBinding callback that get called
-            // every time the PasswordInput updates.
-            setBinding: (fn, valid) => {
-              submitForm = fn;
-              isValid = valid;
-            },
-          },
-        ),
-        onOk: (fn) => { submitForm().then(isValid ? fn : noop); },
-      });
-    },
+    makeUser: privateMakePasswordConfirm(
+      props,
+      {
+        title: `Tornar ${props.email} Usuário?`,
+        message: 'Para confirmar essa mudança, digite sua senha e clique em \'Ok\'.',
+        onSuccess: 'Conta agora tem permissão de usuário!',
+      },
+      {
+        mutation: props.privateChangeUserRole,
+        getVariables: (ownProps, values) => ({ userId: ownProps.id, role: 'user', password: values.password }),
+      },
+    ),
+
+    deleteAccount: privateMakePasswordConfirm(
+      props,
+      {
+        title: `Excluir ${props.email}?`,
+        message: 'Para confirmar a exclusão da conta, digite sua senha e clique em \'Ok\'.',
+        onSuccess: 'Conta Excluída com Sucesso!',
+
+      },
+      {
+        mutation: props.privateChangeUserRole,
+        getVariables: (ownProps, values) => ({ id: ownProps.id, password: values.password }),
+      },
+    ),
+
     recoverPassword: () => {
       const { privateRecoverPassword, message: $message, modal } = props;
 
@@ -74,5 +136,6 @@ export default compose(
   withProps(privateInjectProps(message, Modal)),
   graphql(sendRecoveryEmailMutation, { name: 'privateRecoverPassword' }),
   graphql(disableAccountAsAdminMutation, { name: 'privateDeleteAccount' }),
+  graphql(changeUserRoleMutation, { name: 'privateChangeUserRole' }),
   mapProps(privateMapProps),
 )(UserActions);

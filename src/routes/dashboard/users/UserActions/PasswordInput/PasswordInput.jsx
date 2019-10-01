@@ -1,19 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Field } from 'formik';
 import { Divider } from 'antd';
 import Input, { INPUT_TYPES } from '../../../../../components/DataEntry/Input';
 import { helpText } from './PasswordInput.styles';
 
-export default function PasswordInput() {
+export default function PasswordInput(props) {
+  const { message } = props;
+
   return (
     <>
       <Divider />
       <div className={helpText}>
-        <strong>
-          {
-            "Para confirmar a exclusão da conta, digite sua senha e clique em 'Ok'."
-          }
-        </strong>
+        <strong>{message}</strong>
       </div>
       <Field
         name="password"
@@ -24,3 +23,7 @@ export default function PasswordInput() {
     </>
   );
 }
+
+PasswordInput.propTypes = {
+  message: PropTypes.string.isRequired,
+};

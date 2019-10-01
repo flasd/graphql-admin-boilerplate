@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import {
   Table, Avatar, Badge, Tooltip,
 } from 'antd';
-import get from 'lodash.get';
 import PageHeader from '../../../components/General/PageHeader';
 import Paper from '../../../components/General/Paper/Paper';
 import UserActions from './UserActions';
+import { userPropTypes } from '../../../constants/prop-types';
+import { getRowKeyFromId } from '../../../constants/form-helpers';
 
 export function renderPhoto(text) {
   return <Avatar icon="user" src={text} />;
@@ -26,11 +27,14 @@ export function renderEmail(text, record) {
 }
 
 export function renderActions(text, record) {
-  return <UserActions id={record.id} email={record.email} />;
-}
-
-export function getRowKey(record) {
-  return record.id;
+  return (
+    <UserActions
+      id={record.id}
+      email={record.email}
+      role={record.role}
+      refetch={record.refetch}
+    />
+  );
 }
 
 export const userListColumns = [
@@ -39,11 +43,6 @@ export const userListColumns = [
     dataIndex: 'photo',
     key: 'photo',
     render: renderPhoto,
-    filterMultiple: false,
-    filters: [
-      { text: 'Tem foto', value: true },
-      { text: 'Não tem foto', value: false },
-    ],
   },
   {
     title: 'Nome',
@@ -97,13 +96,12 @@ export default function Users(props) {
   const {
     handleUpdate,
     data: { loading },
+    users,
+    totalUsers,
   } = props;
 
-  const users = get(props, ['data', 'listUsers', 'docs'], []);
-  const totalUsers = get(props, ['data', 'listUsers', 'total'], 1);
-
   return (
-    <div>
+    <>
       <PageHeader
         title="Usuários"
         breadcrumbs={[{ href: '/', label: 'Inicio' }, { label: 'Usuários' }]}
@@ -114,11 +112,11 @@ export default function Users(props) {
           dataSource={users}
           onChange={handleUpdate}
           loading={loading}
-          rowKey={getRowKey}
-          pagination={{ total: totalUsers, pageSize: 25, className: 'radara' }}
+          rowKey={getRowKeyFromId}
+          pagination={{ total: totalUsers, pageSize: 25 }}
         />
       </Paper>
-    </div>
+    </>
   );
 }
 
@@ -127,4 +125,6 @@ Users.propTypes = {
   data: PropTypes.shape({
     loading: PropTypes.bool.isRequired,
   }).isRequired,
+  users: PropTypes.arrayOf(userPropTypes).isRequired,
+  totalUsers: PropTypes.number.isRequired,
 };

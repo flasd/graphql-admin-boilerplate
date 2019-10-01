@@ -48,3 +48,4 @@ export const tosRule = yup.bool().test(
   'Você precisa marcar o campo acima para continuar!',
   privateValidateCheckboxChecked,
 );
+export const topicNameRule = yup.string().matches(/^\w+$/, 'Tópicos não podem ter espaços nem caracteres especiais.');

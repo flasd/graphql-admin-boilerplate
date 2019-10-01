@@ -2,7 +2,7 @@ import {
   compose, withStateHandlers, withHandlers, branch,
 } from 'recompose';
 
-export default function withSearch(payloadName = 'payload') {
+export default function withSearch(payloadName = 'payload', initialValue = null) {
   let searchId = 0;
   let lastUpdate = new Date().valueOf();
 
@@ -12,7 +12,7 @@ export default function withSearch(payloadName = 'payload') {
       withStateHandlers((props) => ({
         loading: false,
         lastSearch: 0,
-        [payloadName]: props[payloadName],
+        [payloadName]: initialValue || props[payloadName],
       }),
       {
         onRequestStart: () => () => ({ loading: true }),
@@ -38,7 +38,7 @@ export default function withSearch(payloadName = 'payload') {
           try {
             onRequestStart();
 
-            const newPayload = await handleSearch(value, payload);
+            const newPayload = await handleSearch(value, payload, props);
             const diff = new Date().valueOf() - lastUpdate;
 
             if (currentSearch === searchId || diff > updateMaxWait) {

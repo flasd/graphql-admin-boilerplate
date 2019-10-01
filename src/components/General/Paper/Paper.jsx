@@ -6,7 +6,7 @@ import { childrenPropTypes } from '../../../constants/prop-types';
 export default function Paper(props) {
   const { children } = props;
 
-  return <div className={classnames(styles.container, 'vh75')}>{children}</div>;
+  return <div className={classnames(styles.container)}>{children}</div>;
 }
 
 Paper.propTypes = {

@@ -7,8 +7,11 @@ import home from './home';
 import users from './users';
 import LoginPath from '../authn/login/Login.path';
 import APath from '../authn/A.path';
+import notification from './notification';
+import topics from './notification/topics';
+import enviar from './notification/enviar';
 
-export const privateRoutes = [home, users];
+export const privateRoutes = [home, users, notification];
 
 export function privateInjectProps(props) {
   return {
@@ -33,9 +36,19 @@ export const privateNavbarItems = [
     icon: 'user',
   },
   {
-    href: '/notificacoes',
+    href: notification.path,
     label: 'Notificações',
     icon: 'notification',
+    subItems: [
+      {
+        href: composePath(enviar.path, notification.path),
+        label: 'Painel de Controle',
+      },
+      {
+        href: composePath(topics.path, notification.path),
+        label: 'Tópicos',
+      },
+    ],
   },
   {
     href: '/pagamentos',

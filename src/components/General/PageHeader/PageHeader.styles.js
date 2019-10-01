@@ -14,3 +14,11 @@ export const title = css`
 export const children = css`
   position: relative;
 `;
+
+export const flexer = css`
+  display: flex;
+`;
+
+export const mainContent = css`
+  flex: 1;
+`;

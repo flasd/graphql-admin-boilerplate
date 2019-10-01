@@ -32,3 +32,10 @@ export const childrenPropTypes = PropTypes.oneOfType([
     ]),
   ),
 ]);
+
+export const userPropTypes = PropTypes.shape({
+  id: PropTypes.string,
+  name: PropTypes.string,
+  email: PropTypes.string,
+  photo: PropTypes.string,
+});

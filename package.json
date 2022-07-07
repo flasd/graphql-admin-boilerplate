@@ -40,7 +40,7 @@
     "lodash.pickby": "^4.6.0",
     "lodash.sortby": "^4.7.0",
     "lodash.sum": "^4.0.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "nanoreset": "^3.0.2",
     "polished": "^3.4.1",
     "prop-types": "^15.7.2",
